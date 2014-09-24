@@ -31,7 +31,7 @@ Then(/^Session ([\w\d]+). I set ([\w]+) as ([\w ]+)$/) do |session,ops,selection
     else
     while (i <= 5)
        scroll_down
-       i=+1
+       i+=1
        if element_exists("* text:'#{selection.to_s}'")
            break
         end
@@ -60,6 +60,8 @@ Then(/^Session ([\w\d]+). I set ([\w]+) as ([\w ]+)$/) do |session,ops,selection
 end
 
 Then(/^Session ([\w\d]+). Scroll ([\w]+)$/) do |session,operation|
+  set_default_device($session[session])
+  sleep 3
   if operation == "down"
     scroll_down
   elsif operation == "up"
