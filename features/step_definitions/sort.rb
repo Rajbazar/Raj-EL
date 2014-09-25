@@ -89,7 +89,7 @@ Then(/^Session ([\w\d]+). Verify sorted list for ([\w :]+)/) do |session,listNam
       end
     elsif listName == "Price: lowest first"
       check_manufacturer = sort_verify 2
-      #####TBD####
+      #####Raj Edited####
     elsif listName == "Price: highest first"
       check_manufacturer = sort_verify 2
       #####TBD####
