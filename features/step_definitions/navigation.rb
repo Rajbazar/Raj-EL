@@ -33,7 +33,7 @@ Then(/^Session ([\w\d]+). I tap on ([\w \& ]+)$/) do |session,ops|
 	    end	
     elsif ops == "English"
 	elsif ops == "DONE"
-		tap_mark 'Done'
+		tap 'Done'
 	elsif ops == "Russian"
 		touch("* text:'Pусский'")
 	elsif ops == "Kazakh"

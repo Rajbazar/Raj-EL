@@ -6,8 +6,15 @@ Then(/^Session ([\w\d]+). I store the list visible on Car Finder Screen$/) do |s
   $car_installment=Array.new
   i=0
   j=0
-  while (i <= 10)
-    var=query("* id:'label_text_view'", :text)
+  $test_grep=-1
+  $var_temp=query("*", :id)
+  def text_grep element_name
+    index_temp=$var_temp.index(element_name)
+    $var_temp.delete_at(index_temp)
+    $test_grep+=1
+    return index_temp+$test_grep+2
+  end
+  while (i <= 10)    
     $car_name.push(var[2])
     $car_name.push(var[5])
     $car_price.push(var[0])
