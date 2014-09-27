@@ -63,7 +63,7 @@ def CheckClientstatus(session)
 end
 begin
   CheckClientstatus("S1")
-  #CheckClientstatus("S2")
+  CheckClientstatus("S2")
 rescue
 end
 

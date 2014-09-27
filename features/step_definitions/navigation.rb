@@ -9,8 +9,8 @@ Then(/^Session ([\w\d]+). I tap on ([\w \& ]+)$/) do |session,ops|
 		wait_for_elements_exist(["* id:'up'"], :timeout => 35)
 		touch("* id:'up'")
 	elsif ops == "CarFinder"
-		wait_for_elements_exist(["* id:'navDrawerItemTitleTextView'"], :timeout => 35)
-		touch("* id:'navDrawerItemTitleTextView'")	
+		wait_for_elements_exist(["* id:'nav_drawer_item_title' * text:'Car Finder'"], :timeout => 35)
+		touch("* id:'nav_drawer_item_title' * text:'Car Finder'")	
 	elsif ops == "Scan & Shop"  
 	 	wait_for_elements_exist(["* text:'Scan & Shop'"], :timeout => 35)
 	    touch("* text:'Scan & Shop'")		
@@ -33,7 +33,7 @@ Then(/^Session ([\w\d]+). I tap on ([\w \& ]+)$/) do |session,ops|
 	    end	
     elsif ops == "English"
 	elsif ops == "DONE"
-		tap 'Done'
+		tap_mark 'Done'
 	elsif ops == "Russian"
 		touch("* text:'Pусский'")
 	elsif ops == "Kazakh"
@@ -85,10 +85,10 @@ Then(/^Session ([\w\d]+). I should see the ([\w \& ]+) Listings$/) do |session, 
 	    var = var + query("* id:'button1'", :text)
 	    puts var
 	elsif listname == "More"
-		var = query("* id:'termsAndPolicyTextView'", :text)
-		var = var + query("* id:'myProfileButton'", :text)
-		var = var + query("* id:'adviceButton'", :text)
-		var = var + query("* id:'versionTextView'", :text)
+		var = query("* id:'more_terms_and_policy_text_view'", :text)
+		var = var + query("* id:'more_my_profile_button'", :text)
+		var = var + query("* id:'more_advice_button'", :text)
+		var = var + query("* id:'more_version_text_view'", :text)
 		puts var    
 	else
 		puts "Wrong input"
@@ -106,3 +106,8 @@ Then(/^Uninstall all apps$/) do
 	end	
 end
 
+##Then Session S1. Clear data
+Then(/^Session ([\w\d]+). Clear data$/) do |session|
+	set_default_device($session[session])
+	clear_app_data
+end 

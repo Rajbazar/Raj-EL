@@ -8,9 +8,9 @@ Before do |scenario|
 set_default_device($session["S1"])
   shutdown_test_server
   start_test_server_in_background
-/set_default_device($session["S2"])
+set_default_device($session["S2"])
   shutdown_test_server
-  start_test_server_in_background /
+  start_test_server_in_background 
  rescue
 end
 end
