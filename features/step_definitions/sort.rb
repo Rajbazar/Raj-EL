@@ -6,21 +6,21 @@ Then(/^Session ([\w\d]+). I store the list visible on Car Finder Screen$/) do |s
   $car_installment=Array.new
   i=0
   j=0
-  $test_grep=-1
   $var_temp=query("*", :id)
   def text_grep element_name
-    index_temp=$var_temp.index(element_name)
-    $var_temp.delete_at(index_temp)
-    $test_grep+=1
-    return index_temp+$test_grep+2
+    index_temp=$var_temp.each_index.select{|k| $var_temp[k] == element_name}
+    return index_temp
   end
-  while (i <= 10)    
-    $car_name.push(var[2])
-    $car_name.push(var[5])
-    $car_price.push(var[0])
-    $car_price.push(var[3])
-    $car_installment.push(var[1])
-    $car_installment.push(var[4])
+  while (i <= 10)
+    junk_index = text_grep 'text_view_model'
+    $car_name.push(junk_index[0]+2)
+    $car_name.push(junk_index[1]+2)
+    junk_index = text_grep 'text_view_price'
+    $car_price.push(junk_index[0]+2)
+    $car_price.push(junk_index[1]+2)
+    junk_index = text_grep 'text_view_pcm'
+    $car_installment.push(junk_index[0]+2)
+    $car_installment.push(junk_index[1]+2)
     begin
       scroll_down
     rescue
