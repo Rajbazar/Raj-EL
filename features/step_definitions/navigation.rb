@@ -2,7 +2,7 @@
 #puts "2222"
 
 ## wait_for_elements_exist( ["button marked:'OK'"], :timeout => 20)
-Then(/^Session ([\w\d]+). I tap on ([\w \& ]+)$/) do |session,ops|
+Then(/^Session ([\w\d]+). I tap on ([\w \& :]+)$/) do |session,ops|
 	set_default_device($session[session])
 	sleep 5
 	if ops == "LeftMenu"
@@ -19,7 +19,7 @@ Then(/^Session ([\w\d]+). I tap on ([\w \& ]+)$/) do |session,ops|
 	    touch("* text:'Application History'")
 	    sleep 10 
 	elsif ops == "More"
-		#wait_for_elements_exist(["* text:'More'"], :timeout => 35)    	
+		wait_for_elements_exist(["* text:'More'"], :timeout => 35)
 		touch("* text:'More'")
 	 elsif ops == "BackButton"
 	 	begin

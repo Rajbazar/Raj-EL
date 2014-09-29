@@ -6,23 +6,22 @@ Then(/^Session ([\w\d]+). I store the list visible on Car Finder Screen$/) do |s
   $car_installment=Array.new
   i=0
   j=0
-  $var_temp=query("*", :id)
-  def text_grep element_name
-    index_temp=$var_temp.each_index.select{|k| $var_temp[k] == element_name}
-    return index_temp
-  end
   while (i <= 10)
-    junk_index = text_grep 'text_view_model'
-    $car_name.push(junk_index[0]+2)
-    $car_name.push(junk_index[1]+2)
-    junk_index = text_grep 'text_view_price'
-    $car_price.push(junk_index[0]+2)
-    $car_price.push(junk_index[1]+2)
-    junk_index = text_grep 'text_view_pcm'
-    $car_installment.push(junk_index[0]+2)
-    $car_installment.push(junk_index[1]+2)
+    var_temp=query("*", :id)
+    junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_model'}
+    $car_name.push(query("*", :text)[junk_index[0]+2])
+    $car_name.push(query("*", :text)[junk_index[1]+2])
+    var_temp=query("*", :id)
+    junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_price'}
+    $car_price.push(query("*", :text)[junk_index[0]+2])
+    $car_price.push(query("*", :text)[junk_index[1]+2])
+    var_temp=query("*", :id)
+    junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_pcm'}
+    $car_installment.push(query("*", :text)[junk_index[0]+2])
+    $car_installment.push(query("*", :text)[junk_index[1]+2])
     begin
       scroll_down
+      sleep 5
     rescue
     end
     i+=1
@@ -41,12 +40,9 @@ end
 
 ##Then Session S1. Verify sorted list for Featured
 
-Then(/^Session ([\w\d]+). Verify sorted list for ([\w :]+)/) do |session,listName|
+Then(/^Session ([\w\d]+). Verify sorted list for ([\w :]+)$/) do |session,listName|
   set_default_device($session[session])
   sleep 3
-   temp_car_name=$car_name
-   temp_car_price=$car_price
-   temp_car_installment=$car_installment
   def sort_verify opt
     junk_car_name=Array.new
     junk_car_price=Array.new
@@ -54,13 +50,18 @@ Then(/^Session ([\w\d]+). Verify sorted list for ([\w :]+)/) do |session,listNam
     i=0
     j=0
     while (i <= 10)
-      var=query("* id:'label_text_view'", :text)
-      junk_car_name.push(var[2])
-      junk_car_name.push(var[5])
-      junk_car_price.push(var[0])
-      junk_car_price.push(var[3])
-      junk_car_installment.push(var[1])
-      junk_car_installment.push(var[4])
+      var_temp=query("*", :id)
+      junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_model'}
+      junk_car_name.push(query("*", :text)[junk_index[0]+2])
+      junk_car_name.push(query("*", :text)[junk_index[1]+2])
+      var_temp=query("*", :id)
+      junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_price'}
+      junk_car_price.push(query("*", :text)[junk_index[0]+2])
+      junk_car_price.push(query("*", :text)[junk_index[1]+2])
+      var_temp=query("*", :id)
+      junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_pcm'}
+      junk_car_installment.push(query("*", :text)[junk_index[0]+2])
+      junk_car_installment.push(query("*", :text)[junk_index[1]+2])
       begin
         scroll_down
       rescue
@@ -84,21 +85,68 @@ Then(/^Session ([\w\d]+). Verify sorted list for ([\w :]+)/) do |session,listNam
     elsif opt == 3
       return junk_car_installment
     end
-   end
+  end
+  def getPrice price_list
+    arr_temp=Array.new
+    arr_temp1=Array.new
+    price_list.each do |x|
+      temp1=(x.split[1])
+      if temp1.include? ','
+        arr_temp.push(temp1.delete! ',')
+      else
+        arr_temp.push(temp1)
+      end
+    end
+    arr_temp.each do |item|
+      arr_temp1.push(item.to_i)
+    end
+    return arr_temp1.uniq
+  end
     if listName == "Featured"
     puts "Same list, nothing to be verified"
     elsif listName == "Manufacturer"
       check_manufacturer = sort_verify 1
-       if check_manufacturer == $car_name.sort
+       if check_manufacturer == $car_name.uniq.sort
         puts "Pass"
       else
         fail("List doesn't match")
       end
     elsif listName == "Price: lowest first"
       check_manufacturer = sort_verify 2
-      #####Raj Edited####
+      a=getPrice check_manufacturer
+      b=getPrice $car_price
+      if a == b.sort
+         puts "Pass"
+      else
+        fail("List doesn't match")
+      end
     elsif listName == "Price: highest first"
       check_manufacturer = sort_verify 2
-      #####TBD####
+      a=getPrice check_manufacturer
+      b=getPrice $car_price
+      b=b.sort
+      if a == b.reverse!
+        puts "Pass"
+      else
+        fail("List doesn't match")
+      end
   end
+end
+
+##Given Session S1. Create profile
+Then(/^Session ([\w\d]+). Create profile$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  wait_for_elements_exist(["* id:'up'"], :timeout => 35)
+  touch("* id:'up'")
+  wait_for_elements_exist(["* text:'More'"], :timeout => 35)
+  touch("* text:'More'")
+  sleep 2
+  tap_mark 'My Profile'
+  /[16] "my_profile_name_edit_text",
+[17] "my_profile_mobile_edit_text",
+[18] "my_profile_email_edit_text",
+[19] "my_profile_language_spinner",
+/
+
 end
