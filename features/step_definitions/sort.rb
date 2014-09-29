@@ -11,17 +11,29 @@ Then(/^Session ([\w\d]+). I store the list visible on Car Finder Screen$/) do |s
     junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_model'}
     $car_name.push(query("*", :text)[junk_index[0]+2])
     $car_name.push(query("*", :text)[junk_index[1]+2])
+    begin
+    $car_name.push(query("*", :text)[junk_index[2]+2])
+    rescue
+    end
     var_temp=query("*", :id)
     junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_price'}
     $car_price.push(query("*", :text)[junk_index[0]+2])
     $car_price.push(query("*", :text)[junk_index[1]+2])
+    begin
+    $car_price.push(query("*", :text)[junk_index[2]+2])
+    rescue
+    end
     var_temp=query("*", :id)
     junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_pcm'}
     $car_installment.push(query("*", :text)[junk_index[0]+2])
     $car_installment.push(query("*", :text)[junk_index[1]+2])
     begin
+    $car_installment.push(query("*", :text)[junk_index[2]+2])
+    rescue
+    end
+    begin
       scroll_down
-      sleep 5
+      sleep 3
     rescue
     end
     i+=1
@@ -54,14 +66,26 @@ Then(/^Session ([\w\d]+). Verify sorted list for ([\w :]+)$/) do |session,listNa
       junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_model'}
       junk_car_name.push(query("*", :text)[junk_index[0]+2])
       junk_car_name.push(query("*", :text)[junk_index[1]+2])
+      begin
+      junk_car_name.push(query("*", :text)[junk_index[2]+2])
+      rescue
+      end
       var_temp=query("*", :id)
       junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_price'}
       junk_car_price.push(query("*", :text)[junk_index[0]+2])
       junk_car_price.push(query("*", :text)[junk_index[1]+2])
+      begin
+      junk_car_price.push(query("*", :text)[junk_index[2]+2])
+      rescue
+      end
       var_temp=query("*", :id)
       junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_pcm'}
       junk_car_installment.push(query("*", :text)[junk_index[0]+2])
       junk_car_installment.push(query("*", :text)[junk_index[1]+2])
+      begin
+      junk_car_installment.push(query("*", :text)[junk_index[2]+2])
+      rescue
+      end
       begin
         scroll_down
       rescue
@@ -143,10 +167,13 @@ Then(/^Session ([\w\d]+). Create profile$/) do |session|
   touch("* text:'More'")
   sleep 2
   tap_mark 'My Profile'
-  /[16] "my_profile_name_edit_text",
-[17] "my_profile_mobile_edit_text",
-[18] "my_profile_email_edit_text",
-[19] "my_profile_language_spinner",
-/
+query("* id:'my_profile_name_edit_text'", {:setText => ""})
+query("* id:'my_profile_mobile_edit_text'", {:setText => ""})
+query("* id:'my_profile_email_edit_text'", {:setText => ""})
+query("* id:'my_profile_name_edit_text'", {:setText => ""+$Configuration["ProfileName"]+""})
+query("* id:'my_profile_mobile_edit_text'", {:setText => ""+$Configuration["ProfileNumber"]+""})
+query("* id:'my_profile_email_edit_text'", {:setText => ""+$Configuration["ProfileEmail"]+""})
+sleep 3
+tap_mark 'Save'
 
 end
