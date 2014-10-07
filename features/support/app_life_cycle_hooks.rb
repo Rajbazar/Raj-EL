@@ -8,22 +8,22 @@ Before do |scenario|
 set_default_device($session["S1"])
   shutdown_test_server
   start_test_server_in_background
-set_default_device($session["S2"])
+/set_default_device($session["S2"])
   shutdown_test_server
-  start_test_server_in_background 
+  start_test_server_in_background/
  rescue
 end
 end
 
-/After do |scenario|
+After do |scenario|
 
-  if scenario.failed?
+ if scenario.failed?
     screenshot_embed
   end
-  set_default_device($session["S1"])	
+  /set_default_device($session["S1"])	
   shutdown_test_server
    set_default_device($session["S2"])	
-  shutdown_test_server
-end/
+  shutdown_test_server/
+end
 
 

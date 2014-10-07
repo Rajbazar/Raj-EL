@@ -16,9 +16,9 @@ def android_LaunchClient(session)
     remove_instance_variable(:@default_device)
   rescue
   end
-  uninstall_apps()
+  /uninstall_apps()
   install_app(ENV["TEST_APP_PATH"])
-  install_app(ENV["APP_PATH"])
+  install_app(ENV["APP_PATH"]) /
   x1=default_device
   set_default_device(x1)
   if defined? $session
@@ -63,7 +63,7 @@ def CheckClientstatus(session)
 end
 begin
   CheckClientstatus("S1")
-  CheckClientstatus("S2")
+  #CheckClientstatus("S2")
 rescue
 end
 
