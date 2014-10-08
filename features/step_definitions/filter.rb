@@ -2,7 +2,7 @@ Then(/^Session ([\w\d]+). I set ([\w]+) as ([\w ]+)$/) do |session,ops,selection
   set_default_device($session[session])
   sleep 5
   if ops == "PriceRange"
-    var=query("* id:'seek_bar_price_range'").to_s
+    var=query("* id:'seek_bar_value_text_view'").to_s
     exp=/. ([\d,-]+) #/
     exp1=/\"y...([\d]+)/
     m=exp.match(var)
@@ -39,15 +39,15 @@ Then(/^Session ([\w\d]+). I set ([\w]+) as ([\w ]+)$/) do |session,ops,selection
      touch("* text:'#{selection.to_s}'")
    end
   elsif ops == "FuelType"
-    touch("* id:'spinner_fuel_selection’")
+    touch("* id:'spinner_fuel_selection'")
     sleep 2
     touch("* text:'#{selection.to_s}'")
   elsif ops == "TransmissionType"
-    touch("* id:'spinner_transmission_selection’")
+    touch("* id:'spinner_transmission_selection'")
     sleep 2
     touch("* text:'#{selection.to_s}'")
   elsif ops == "DealerType"
-     touch("* id:'spinner_wheel_drive_selection'")
+    touch("* id:'spinner_dealership_selection'") 
      sleep 2
      touch("* text:'#{selection.to_s}'")
   elsif ops == "WheelDriveType"
