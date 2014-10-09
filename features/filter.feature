@@ -14,6 +14,7 @@ Scenario: Use all the options available on Filter Screen
     And Session S1. I set FuelType as Diesel
     And Session S1. Scroll down
     And Session S1. I set TransmissionType as Automatic
+    And Session S1. I set EngineSize as 2L - 2.9L
     And Session S1. Scroll down
     And Session S1. Scroll down
     And Session S1. I set DealerType as Car Dealer

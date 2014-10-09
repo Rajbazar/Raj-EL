@@ -11,25 +11,31 @@ Then(/^Session ([\w\d]+). I store the list visible on Car Finder Screen$/) do |s
     junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_model'}
     $car_name.push(query("*", :text)[junk_index[0]+2])
     $car_name.push(query("*", :text)[junk_index[1]+2])
+    if $Configuration["CarFinderScreenNo"] == "3"
     begin
     $car_name.push(query("*", :text)[junk_index[2]+2])
     rescue
+    end
     end
     var_temp=query("*", :id)
     junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_price'}
     $car_price.push(query("*", :text)[junk_index[0]+2])
     $car_price.push(query("*", :text)[junk_index[1]+2])
+    if $Configuration["CarFinderScreenNo"] == "3"
     begin
     $car_price.push(query("*", :text)[junk_index[2]+2])
     rescue
+    end
     end
     var_temp=query("*", :id)
     junk_index=var_temp.each_index.select{|k| var_temp[k] == 'text_view_pcm'}
     $car_installment.push(query("*", :text)[junk_index[0]+2])
     $car_installment.push(query("*", :text)[junk_index[1]+2])
+    if $Configuration["CarFinderScreenNo"] == "3"
     begin
     $car_installment.push(query("*", :text)[junk_index[2]+2])
     rescue
+    end
     end
     begin
       scroll_down
@@ -167,13 +173,48 @@ Then(/^Session ([\w\d]+). Create profile$/) do |session|
   touch("* text:'More'")
   sleep 2
   tap_mark 'My Profile'
-query("* id:'my_profile_name_edit_text'", {:setText => ""})
-query("* id:'my_profile_mobile_edit_text'", {:setText => ""})
-query("* id:'my_profile_email_edit_text'", {:setText => ""})
-query("* id:'my_profile_name_edit_text'", {:setText => ""+$Configuration["ProfileName"]+""})
-query("* id:'my_profile_mobile_edit_text'", {:setText => ""+$Configuration["ProfileNumber"]+""})
-query("* id:'my_profile_email_edit_text'", {:setText => ""+$Configuration["ProfileEmail"]+""})
-sleep 3
-tap_mark 'Save'
+  query("* id:'my_profile_name_edit_text'", {:setText => ""})
+  query("* id:'my_profile_mobile_edit_text'", {:setText => ""})
+  query("* id:'my_profile_email_edit_text'", {:setText => ""})
+  query("* id:'my_profile_name_edit_text'", {:setText => ""+$Configuration["ProfileName"]+""})
+  query("* id:'my_profile_mobile_edit_text'", {:setText => ""+$Configuration["ProfileNumber"]+""})
+  query("* id:'my_profile_email_edit_text'", {:setText => ""+$Configuration["ProfileEmail"]+""})
+  sleep 3
+  tap_mark 'Save'
 
+end
+
+
+Then(/^Session ([\w\d]+). Select car ([\w ]+)$/) do |session,carName|
+  set_default_device($session[session])
+  sleep 3
+  i=0
+  while i <= 10
+    if query("* id:'label_text_view'", :text)[i] == carName.to_s || query("* id:'label_text_view'", :text)[i+3] == carName.to_s
+      break
+    end
+    begin
+      scroll_down
+    rescue
+    end
+    i=i+1
+  end
+  sleep 2
+  touch("* {text CONTAINS '"+carName.to_s+"'}")
+end
+
+Then(/^Session ([\w\d]+). Apply for Loan$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  touch("* id:'car_details_appy_loan_button'")
+  sleep 3
+  tap_mark 'I Understand'
+  sleep 5
+end
+
+
+Then(/^Session ([\w\d]+). Display reference code$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  puts "Your reference code: " + query("* id:'loan_application_received_ref_text_view'", :text)[0]
 end
