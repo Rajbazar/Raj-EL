@@ -32,10 +32,18 @@ Then(/^Session ([\w\d]+). I set ([\w]+) as ([\w -\.]+)$/) do |session,ops,select
       count=count+1
     end
   elsif ops == "city"
+    if !element_exists("* id:'spinner_city_selection'")
+      scroll_down
+      scroll_down
+    end
     touch("* id:'spinner_city_selection'")
     sleep 2
     touch("* text:'#{selection.to_s}'")
   elsif ops == "BodyType"
+    if !element_exists("* id:'spinner_body_selection'")
+      scroll_down
+      scroll_down
+    end
     i=0
     touch("* id:'spinner_body_selection'")
     sleep 2
@@ -52,22 +60,42 @@ Then(/^Session ([\w\d]+). I set ([\w]+) as ([\w -\.]+)$/) do |session,ops,select
      touch("* text:'#{selection.to_s}'")
    end
   elsif ops == "FuelType"
-    touch("* id:'spinner_fuel_selection’")
+    if !element_exists("* id:'spinner_fuel_selection'")
+      scroll_down
+      scroll_down
+    end
+    touch("* id:'spinner_fuel_selection'")
     sleep 2
     touch("* text:'#{selection.to_s}'")
   elsif ops == "TransmissionType"
-    touch("* id:'spinner_transmission_selection’")
+    if !element_exists("* id:'spinner_fuel_selection'")
+      scroll_down
+      scroll_down
+    end
+    touch("* id:'spinner_transmission_selection'")
     sleep 2
     touch("* text:'#{selection.to_s}'")
   elsif ops == "EngineSize"
-    touch("* id:'spinner_engine_selection’")
+    if !element_exists("* id:'spinner_engine_selection'")
+      scroll_down
+      scroll_down
+    end
+    touch("* id:'spinner_engine_selection'")
     sleep 2
     touch("* text:'#{selection.to_s}'")
   elsif ops == "DealerType"
+    if !element_exists("* id:'spinner_dealership_selection'")
+      scroll_down
+      scroll_down
+    end
      touch("* id:'spinner_dealership_selection'")
      sleep 2
      touch("* text:'#{selection.to_s}'")
   elsif ops == "WheelDriveType"
+    if !element_exists("* id:'spinner_wheel_drive_selection'")
+      scroll_down
+      scroll_down
+    end
     touch("* id:'spinner_wheel_drive_selection'")
     sleep 2
     touch("* text:'#{selection.to_s}'")
