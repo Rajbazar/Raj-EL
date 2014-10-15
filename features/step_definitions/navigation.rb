@@ -33,7 +33,14 @@ Then(/^Session ([\w\d]+). I tap on ([\w \& :]+)$/) do |session,ops|
 	    end	
     elsif ops == "English"
 	elsif ops == "DONE"
-		tap_mark 'Done'
+		begin
+		tap_mark 'dialog_language_done_button_text_view'
+		rescue
+		end
+		begin
+		tap_mark 'loan_application_received_done_button'		
+		rescue
+		end	
 	elsif ops == "Russian"
 		touch("* text:'Pусский'")
 	elsif ops == "Kazakh"
@@ -88,6 +95,7 @@ Then(/^Session ([\w\d]+). I should see the ([\w \& ]+) Listings$/) do |session, 
 		var = query("* id:'more_terms_and_policy_text_view'", :text)
 		var = var + query("* id:'more_my_profile_button'", :text)
 		var = var + query("* id:'more_advice_button'", :text)
+		var = var + query("* id:'more_change_language_text_view'")
 		var = var + query("* id:'more_version_text_view'", :text)
 		puts var    
 	else
