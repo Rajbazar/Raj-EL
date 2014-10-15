@@ -113,3 +113,14 @@ Then(/^Session ([\w\d]+). Scroll ([\w]+)$/) do |session,operation|
     scroll_up
   end
 end
+
+
+Then(/^Session ([\w\d]+). Verify filter selection text ([\w -\.]+)$/) do |session,text|
+  set_default_device($session[session])
+  sleep 3
+  if element_exists("* { text CONTAINS '"+text.to_s+"'}")
+    puts "Filter Text - "+text.to_s
+  else
+    fail("Filter text doesn't exist")
+  end
+end
