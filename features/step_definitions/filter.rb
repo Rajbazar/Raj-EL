@@ -115,12 +115,92 @@ Then(/^Session ([\w\d]+). Scroll ([\w]+)$/) do |session,operation|
 end
 
 
-Then(/^Session ([\w\d]+). Verify filter selection text ([\w -\.]+)$/) do |session,text|
+Then(/^Session ([\w\d]+). Verify filter with text ([\w -\.]+)$/) do |session,text|
   set_default_device($session[session])
   sleep 3
+  flag=true
+  fields=text.to_s.split(", ")
+  text=text.to_s.gsub(/Any [\w ]+, /,'')
   if element_exists("* { text CONTAINS '"+text.to_s+"'}")
     puts "Filter Text - "+text.to_s
+    res_str=query("* id:'button_apply_filter'",:text)[0]
+    exp=/.*\(([0-9]+).*/
+    no_of_res=exp.match(res_str)[1].to_i
+    if no_of_res == 0
+      fail("No Results Found, either change the test steps or verify manually")
+    else
+      tap_mark 'button_apply_filter'
+      sleep 5
+      touch(query("* id:'text_view_model'")[0])
+      sleep 10
+      text_price=fields[0].delete! ','
+      text_price=text_price.to_i
+      act_price=query("* id:'car_details_label_view_1' * index:2", :text)[0].delete! 'KZT ,'
+      act_price=act_price.to_i
+      if act_price <= text_price
+        flag=true
+      else
+        flag=false
+        fail("Price not as per filter")
+      end
+        car_specs_name=Array.new
+        car_specs_value=Array.new
+        i=0
+        while i < 10
+          car_specs_name.push(query("* id:'car_details_spec_list_name_text_view'", :text)[i])
+          car_specs_name.push(query("* id:'car_details_spec_list_name_text_view'", :text)[i+1])
+          car_specs_name.push(query("* id:'car_details_spec_list_name_text_view'", :text)[i+2])
+          car_specs_name.push(query("* id:'car_details_spec_list_name_text_view'", :text)[i+3])
+          car_specs_value.push(query("* id:'car_details_spec_list_value_text_view'", :text)[i])
+          car_specs_value.push(query("* id:'car_details_spec_list_value_text_view'", :text)[i+1])
+          car_specs_value.push(query("* id:'car_details_spec_list_value_text_view'", :text)[i+2])
+          car_specs_value.push(query("* id:'car_details_spec_list_value_text_view'", :text)[i+3])
+          if i%2 ==0
+          scroll_down
+          end
+         i+=1
+        end
+        car_specs_name=car_specs_name.uniq!
+        car_specs_value=car_specs_value.uniq!
+        ###Merge Arrays####
+        if car_specs_name.length == car_specs_value.length
+            specs=Hash.new
+            j=0
+            while j <= car_specs_value.length
+              specs[car_specs_name[j].to_s]=car_specs_value[j].to_s
+              j+=1
+            end
+        end
+        if ((specs["Body Type"].downcase.include? fields[2].downcase || fields[2].downcase == "any body type") && (specs["Fuel Type"].downcase.include? fields[3].downcase || fields[3].downcase == "any fuel type") && (specs["Transition Type"].downcase.include? fields[4].downcase || fields[4].downcase == "any transmission type") && (specs["Wheel Drive"].downcase.include? fields[6].downcase || fields[6].downcase == "any wheel drive type"))
+          flag=true
+        else
+          flag=false
+        end
+        if fields[7].include? " - "
+          eng_size_range=fields[7].delete "L"
+          eng_size=eng_size_range.split(" - ")
+          specs_eng_size=specs["Engine Size"].gsub(' litres','').to_f
+          if specs_eng_size >= eng_size[0].to_f && specs_eng_size < eng_size[1].to_f
+            flag=true
+          else
+            flag=false
+          end
+        else
+          eng_size_range=fields[7].delete "L+"
+          specs_eng_size=specs["Engine Size"].gsub(' litres','').to_f
+          if eng_size_range.to_f >= specs_eng_size
+            flag=true
+          else
+            flag=false
+          end
+        end
+    end
   else
     fail("Filter text doesn't exist")
+  end
+  if flag == true
+     puts "Filter Verification successful"
+  else
+    fail("Filter Verification Failed")
   end
 end

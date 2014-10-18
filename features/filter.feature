@@ -15,6 +15,6 @@ Scenario: Use all the options available on Filter Screen
     And Session S1. I set EngineSize as 2L - 2.9L
     And Session S1. I set DealerType as Car dealer
     And Session S1. I set WheelDriveType as Front
-    Then Session S1. Verify filter selection text 9,000, Hatchback, Diesel, Automatic, Car dealer, Front, 2L - 2.9L
-    Then Session S1. Apply Filter
+    Then Session S1. Verify filter with text 9,000, Any City, Hatchback, Diesel, Automatic, Car dealer, Front, 2L - 2.9L
+
 
