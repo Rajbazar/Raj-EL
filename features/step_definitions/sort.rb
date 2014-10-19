@@ -188,19 +188,23 @@ end
 Then(/^Session ([\w\d]+). Select car ([\w ]+)$/) do |session,carName|
   set_default_device($session[session])
   sleep 3
+  if element_exists("* {text CONTAINS '"+carName.to_s+"'}")
+    touch("* {text CONTAINS '"+carName.to_s+"'}")
+  else
   i=0
   while i <= 10
-    if query("* id:'label_text_view'", :text)[i] == carName.to_s || query("* id:'label_text_view'", :text)[i+3] == carName.to_s
-      break
-    end
     begin
       scroll_down
     rescue
     end
+    if element_exists("* {text CONTAINS '"+carName.to_s+"'}")
+      touch("* {text CONTAINS '"+carName.to_s+"'}")
+      break
+    end
     i=i+1
   end
   sleep 2
-  touch("* {text CONTAINS '"+carName.to_s+"'}")
+  end
 end
 
 Then(/^Session ([\w\d]+). Apply for Loan$/) do |session|
