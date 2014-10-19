@@ -32,6 +32,7 @@ Then(/^Session ([\w\d]+). I tap on ([\w \& :]+)$/) do |session,ops|
 	    rescue 
 	    end	
     elsif ops == "English"
+    	touch("* text:'English'")
 	elsif ops == "DONE"
 		begin
 		tap_mark 'dialog_language_done_button_text_view'

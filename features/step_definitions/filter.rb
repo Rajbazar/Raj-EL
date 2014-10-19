@@ -38,7 +38,7 @@ Then(/^Session ([\w\d]+). I set ([\w]+) as ([\w -\.]+)$/) do |session,ops,select
     end
     touch("* id:'spinner_city_selection'")
     sleep 2
-    touch("* text:'#{selection.to_s}'")
+    touch("* {text CONTAINS'#{selection.to_s}'}")
   elsif ops == "BodyType"
     if !element_exists("* id:'spinner_body_selection'")
       scroll_down
@@ -90,7 +90,7 @@ Then(/^Session ([\w\d]+). I set ([\w]+) as ([\w -\.]+)$/) do |session,ops,select
     end
      touch("* id:'spinner_dealership_selection'")
      sleep 2
-     touch("* text:'#{selection.to_s}'")
+     touch("* {text CONTAINS'#{selection.to_s}'}")
   elsif ops == "WheelDriveType"
     if !element_exists("* id:'spinner_wheel_drive_selection'")
       scroll_down
@@ -188,7 +188,7 @@ Then(/^Session ([\w\d]+). Verify filter with text ([\w -\.]+)$/) do |session,tex
         else
           eng_size_range=fields[7].delete "L+"
           specs_eng_size=specs["Engine Size"].gsub(' litres','').to_f
-          if eng_size_range.to_f >= specs_eng_size
+          if specs_eng_size >= eng_size_range.to_f
             flag=true
           else
             flag=false

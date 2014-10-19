@@ -2,19 +2,6 @@
 
 Feature:Plus Button verification
 
-@Android @SingleDevice @EL-200
- Scenario: Select Language as English
-   Given Session S1. I tap on English
-    When Session S1. I tap on DONE
-     And I wait for 10 seconds
-
-@Android @MultipleDevice @EL-201
- Scenario: Select Language as English
-   Given Session S1. I tap on English
-   Given Session S2. I tap on English
-    When Session S1. I tap on DONE
-    When Session S2. I tap on DONE
-     And I wait for 10 seconds     
 
  @Android @SingleDevice @EL-202
   Scenario: Verify the presence of Plus button
