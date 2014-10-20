@@ -120,7 +120,7 @@ Then(/^Session ([\w\d]+). Verify filter with text ([\w -\.]+)$/) do |session,tex
   sleep 3
   flag=true
   fields=text.to_s.split(", ")
-  text=text.to_s.gsub(/Any [\w ]+, /,'')
+  text=text.to_s.gsub(/Any [\w ]+, |, Any [\w ]+/,'') 
   if element_exists("* { text CONTAINS '"+text.to_s+"'}")
     puts "Filter Text - "+text.to_s
     res_str=query("* id:'button_apply_filter'",:text)[0]
@@ -171,6 +171,7 @@ Then(/^Session ([\w\d]+). Verify filter with text ([\w -\.]+)$/) do |session,tex
               j+=1
             end
         end
+        ####Demo puts specs####
         if ((specs["Body Type"].downcase.include? fields[2].downcase || fields[2].downcase == "any body type") && (specs["Fuel Type"].downcase.include? fields[3].downcase || fields[3].downcase == "any fuel type") && (specs["Transition Type"].downcase.include? fields[4].downcase || fields[4].downcase == "any transmission type") && (specs["Wheel Drive"].downcase.include? fields[6].downcase || fields[6].downcase == "any wheel drive type"))
           flag=true
         else

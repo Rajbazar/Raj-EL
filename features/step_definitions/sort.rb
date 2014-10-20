@@ -185,7 +185,7 @@ Then(/^Session ([\w\d]+). Create profile$/) do |session|
 end
 
 
-Then(/^Session ([\w\d]+). Select car ([\w ]+)$/) do |session,carName|
+Then(/^Session ([\w\d]+). Select car ([\w\d -]+)$/) do |session,carName|
   set_default_device($session[session])
   sleep 3
   if element_exists("* {text CONTAINS '"+carName.to_s+"'}")
@@ -198,6 +198,7 @@ Then(/^Session ([\w\d]+). Select car ([\w ]+)$/) do |session,carName|
     rescue
     end
     if element_exists("* {text CONTAINS '"+carName.to_s+"'}")
+      scroll_down
       touch("* {text CONTAINS '"+carName.to_s+"'}")
       break
     end
@@ -211,6 +212,8 @@ Then(/^Session ([\w\d]+). Apply for Loan$/) do |session|
   set_default_device($session[session])
   sleep 3
   touch("* id:'car_details_appy_loan_button'")
+  sleep 3
+  tap_mark 'action_submit'
   sleep 3
   tap_mark 'I Understand'
   sleep 5

@@ -37,7 +37,7 @@ Scenario: Store the List on Car Finder Screen
     When Session S1. I tap on plus button
      And Session S1. I tap on sort button
     Then Session S1. I tap on Featured
-    Then Session S1. Select car DC Batmobile mark I
+    Then Session S1. Select car Transformers Optimus Prime
     Then Session S1. Apply for Loan
     Then Session S1. Display reference code
      And Session S1. I tap on DONE

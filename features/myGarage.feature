@@ -8,13 +8,13 @@ Feature:Verifying My Garage Listings
 @Android @EL-501
  Scenario: Adding cars to my garage from Car Finder listings
    Given Session S1. I am on Car Finder Screen
-    Then Session S1. Select car DC Batmobile mark I
+    Then Session S1. Select car Transformers Optimus Prime
      And Session S1. I add the selected car in my garage
     Then Session S1. Verify pop up text as Car Added to Garage
     Then Session S1. I press back button
-    Then Session S1. Verify car DC Batmobile mark I is being added to Garage
-    Then Session S1. I tap on DC Batmobile mark I
-    And Session S1. I remove the selected car from my garage
+    Then Session S1. Verify car Transformers Optimus Prime is being added to Garage
+    Then Session S1. I tap on Transformers Optimus Prime
+     And Session S1. I remove the selected car from my garage
     Then Session S1. Verify pop up text as Car removed from garage
     Then Session S1. I press back button
     Then Session S1. I press back button
