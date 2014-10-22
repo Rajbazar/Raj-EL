@@ -5,7 +5,7 @@ Feature:Verifying My Garage Listings
    So that I can choose best of one for applying a loan
 
 
-@Android @EL-501
+@Android @EL-300
  Scenario: Adding cars to my garage from Car Finder listings
    Given Session S1. I am on Car Finder Screen
     Then Session S1. Select car Transformers Optimus Prime
@@ -21,14 +21,25 @@ Feature:Verifying My Garage Listings
 
 
 
-@Android @EL-3002
- Scenario: navigating to My Garage from CarFinder Screen 
-   Given Session S1. I tap on car symbol from top rightand corner on the app
-    Then Session S1. I should see My Garage screen
-     And Session S1. I shlould see all selected cars
-     And Session S1. I should able to scroll up and down to view my garage lsitings
-     And Session S1. I should see Apply For Loan banner on the bottom 
-
+@Android @EL-301
+ Scenario: navigate selected car lsitings and journey to loan application
+      Given Session S1. Create profile
+      Given Session S1. I tap on LeftMenu
+      When Session S1. I tap on CarFinder
+      Given Session S1. I am on Car Finder Screen
+      Then Session S1. Select car Transformers Optimus Prime
+      And Session S1. I add the selected car in my garage
+      Then Session S1. Verify pop up text as Car Added to Garage
+      Then Session S1. I press back button
+      Then Session S1. Verify car Transformers Optimus Prime is being added to Garage
+      Then Session S1. I tap on Transformers Optimus Prime
+      Then Session S1. Apply for Loan
+      Then Session S1. Display reference code
+       And Session S1. I tap on DONE
+      And Session S1. I remove the selected car from my garage
+      Then Session S1. Verify pop up text as Car removed from garage
+      Then Session S1. I press back button
+      Then Session S1. I press back button
    
 
 

@@ -3,14 +3,14 @@
 Feature:Plus Button verification
 
 
- @Android @SingleDevice @EL-202
+ @Android @SingleDevice @EL-200
   Scenario: Verify the presence of Plus button
     Given Session S1. I am on Car Finder Screen
       And Session S1. Verify the plus button
      When Session S1. I tap on plus button
      Then Session S1. Verify the options bar
 
-@Android @MultipleDevice @EL-203
+@Android @MultipleDevice @EL-201
   Scenario: Verify the presence of Plus button
     Given Session S1. I am on Car Finder Screen
     Given Session S2. I am on Car Finder Screen
@@ -22,7 +22,7 @@ Feature:Plus Button verification
      Then Session S2. Verify the options bar
 
 
-@Android @SingleDevice @EL-204
+@Android @SingleDevice @EL-202
  Scenario: Verify the search functionality of Plus button
    Given Session S1. I am on Car Finder Screen
     When Session S1. I tap on plus button
@@ -32,7 +32,7 @@ Feature:Plus Button verification
      And Session S1. Enter CarName as acbcv abvb
      And Session S1. Verify text in Car Details as acbcv abvb
 
-@Android @MultipleDevice @EL-205
+@Android @MultipleDevice @EL-203
  Scenario: Verify the search functionality of Plus button
    Given Session S1. I am on Car Finder Screen
    Given Session S2. I am on Car Finder Screen
@@ -51,7 +51,7 @@ Feature:Plus Button verification
 
 
 
-@Android @SingleDevice @EL-206
+@Android @SingleDevice @EL-204
  Scenario: Verify the text under sort button
    Given Session S1. I am on Car Finder Screen
     When Session S1. I tap on plus button
@@ -63,7 +63,7 @@ Feature:Plus Button verification
     Then Session S1. Verify text under Sort Button Price: highest first
      And Session S1. I tap on sort button
 
-@Android @MultipleDevice @EL-207
+@Android @MultipleDevice @EL-205
  Scenario: Verify the text under sort button
    Given Session S1. I am on Car Finder Screen
    Given Session S2. I am on Car Finder Screen
@@ -84,15 +84,15 @@ Feature:Plus Button verification
      And Session S1. I tap on sort button
      And Session S2. I tap on sort button     
 
-@Android @SingleDevice @EL-208
+@Android @SingleDevice @EL-206
  Scenario: Verify the presence of Filter Button
    Given Session S1. I am on Car Finder Screen
-   When Session S1. I tap on plus button
-    And Session S1. Verify the filter button
-    And Session S1. I tap on filter button
-   Then Session S1. I press back button
+    When Session S1. I tap on plus button
+     And Session S1. Verify the filter button
+     And Session S1. I tap on filter button
+    Then Session S1. I press back button
 
-@Android @MultipleDevice @EL-209
+@Android @MultipleDevice @EL-207
  Scenario: Verify the presence of Filter Button
    Given Session S1. I am on Car Finder Screen
    Given Session S2. I am on Car Finder Screen
@@ -101,8 +101,8 @@ Feature:Plus Button verification
      And Session S1. Verify the filter button
      And Session S2. Verify the filter button
      And Session S1. I tap on filter button
-     And Session S2 I tap on filter button
+     And Session S2. I tap on filter button
     Then Session S1. I press back button
-   Then Session S2. I press back button
+    Then Session S2. I press back button
 
 

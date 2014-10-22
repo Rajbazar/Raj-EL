@@ -2,7 +2,7 @@
 
 Feature:Feature Button
 
-  @Android @SingleDevice @EL-301
+  @Android @SingleDevice @EL-400
 Scenario: Use all the options available on Filter Screen
     Given Session S1. I am on Car Finder Screen
     When Session S1. I tap on plus button

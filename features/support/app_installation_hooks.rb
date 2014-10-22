@@ -18,7 +18,7 @@ def android_LaunchClient(session)
   end
   /uninstall_apps()
   install_app(ENV["TEST_APP_PATH"])
-  install_app(ENV["APP_PATH"]) /
+  install_app(ENV["APP_PATH"])/
   x1=default_device
   set_default_device(x1)
   if defined? $session
