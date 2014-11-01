@@ -16,17 +16,33 @@ Then(/^Open CMS Webportal and grep information$/) do
    driver.text_field(:name => 'password').set 'pass3'
    driver.button(:type => 'submit').click
    Watir::Wait.until { driver.text.include? 'Log out' }
-   driver.button(:id => 'prod-edit-dropd-2').click
-   driver.link(:text => 'QR code').click
-   sleep 10
-   driver.windows.last.use
-   driver.screenshot.save 'screen1.png'
-   driver.windows.last.use.close
-   /driver.button(:id => 'prod-edit-dropd-1').click
-   driver.
-   sleep 10
-   driver.windows.last.use
-   driver.screenshot.save 'screen2.png'
-   driver.windows.last.use.close
-   image_src = driver.find_element(:id => 'code')  /
+   j=1
+   20.step(1, -1) { |i|
+     if driver.button(:id => "prod-edit-dropd-#{i}").exists?
+       driver.button(:id => "prod-edit-dropd-#{i}").click
+       driver.link(:xpath => "(//a[contains(text(),'QR code')])[#{j}]").click
+       sleep 5
+       driver.windows.last.use
+       driver.screenshot.save "screen#{j}.png"
+       driver.windows.last.use.close
+       j+=1
+     end
+   }
+  driver.link(:id => 'log-out-link').click
+  sleep 5
+  driver.goto "http://zxing.org/w/decode.jspx"
+  Watir::Wait.until { driver.text.include? 'upload a file' }
+  a=Dir.glob("screen*.png")
+  code_eval=Hash.new
+  i=1
+   while i <= a.length
+    driver.file_field(:name => "f").value = "#{currDir}/screen#{i}.png"
+    driver.button(:xpath => "(//input[@type='submit'])[2]").click
+    code_eval["screen#{i}.png"]= driver.table[4][1].text
+    driver.back
+    File.delete("#{currDir}/screen#{i}.png")
+    i+=1
+   end
+   driver.close
+   puts code_eval
 end
