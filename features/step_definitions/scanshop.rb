@@ -23,7 +23,7 @@ Then(/^Open CMS Webportal and grep information$/) do
        driver.link(:xpath => "(//a[contains(text(),'QR code')])[#{j}]").click
        sleep 5
        driver.windows.last.use
-       driver.screenshot.save "screen#{j}.png"
+       driver.screenshot.save "qr#{j}.png"
        driver.windows.last.use.close
        j+=1
      end
@@ -32,15 +32,15 @@ Then(/^Open CMS Webportal and grep information$/) do
   sleep 5
   driver.goto "http://zxing.org/w/decode.jspx"
   Watir::Wait.until { driver.text.include? 'upload a file' }
-  a=Dir.glob("screen*.png")
+  a=Dir.glob("qr*.png")
   code_eval=Hash.new
   i=1
    while i <= a.length
-    driver.file_field(:name => "f").value = "#{currDir}/screen#{i}.png"
+    driver.file_field(:name => "f").value = "#{currDir}/qr#{i}.png"
     driver.button(:xpath => "(//input[@type='submit'])[2]").click
-    code_eval["screen#{i}.png"]= driver.table[4][1].text
+    code_eval["qr#{i}.png"]= driver.table[4][1].text
     driver.back
-    File.delete("#{currDir}/screen#{i}.png")
+    File.delete("#{currDir}/qr#{i}.png")
     i+=1
    end
    driver.close
