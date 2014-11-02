@@ -38,7 +38,7 @@ Feature:Basic Navigation
     Given Session S1. I tap on LeftMenu
      When Session S1. I tap on Scan & Shop
       And I wait for 10 seconds
-     Then Session S1. I should see the Scan & Shop Listings  
+     Then Session S1. I should see camera and basket under Scan & Shop  
 
  @Android @MultipleDevice @EL-104
   Scenario: To get the list from the Scan & Shop  list
@@ -48,8 +48,8 @@ Feature:Basic Navigation
      When Session S2. I tap on Scan & Shop
       And I wait for 10 seconds
       And I wait for 10 seconds
-     Then Session S1. I should see the Scan & Shop Listings    
-     Then Session S2. I should see the Scan & Shop Listings 
+     Then Session S1. I should see camera and basket under Scan & Shop     
+     Then Session S2. I should see camera and basket under Scan & Shop  
      
 
  @Android @SingleDevice @EL-105
@@ -93,8 +93,20 @@ Feature:Basic Navigation
      Then Session S2. I should see the More Listings     
 
   
-
-     
+@Android @SingleDevice @EL-109
+ Scenario: Change the language from More Screen
+   Given Session S1. I tap on LeftMenu
+    When Session S1. I tap on More
+     And I wait for 10 seconds
+     Then Session S1. I tap on Change language
+     Then Session S1. I tap on Russian
+     Then Session S1. I tap on DONE
+     Then Session S1. I tap on Change language
+     Then Session S1. I tap on Kazakh
+     Then Session S1. I tap on DONE
+     Then Session S1. I tap on Change language
+     Then Session S1. I tap on English
+     Then Session S1. I tap on DONE
 
 
 

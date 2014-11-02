@@ -16,4 +16,4 @@ Feature:Application History
       Then Session S1. I press back button
       When Session S1. I tap on LeftMenu
       When Session S1. I tap on Application History
-      Then Session S1. Verify Transformers Optimus Prime car is added 2-times in Application History with current date
+      Then Session S1. Verify Transformers Optimus Prime car is added 1-times in Application History with current date

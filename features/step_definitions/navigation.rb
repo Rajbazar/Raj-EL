@@ -54,6 +54,8 @@ Then(/^Session ([\w\d]+). I tap on ([\w \& :]+)$/) do |session,ops|
     touch("* id:'sort_button'")
   elsif ops == "filter button"
     touch("* id:'filter_button'")
+  elsif ops == "Change language"
+   	touch("* id:'more_change_language_text_view'")	 	  
 	else	
 		touch("* text:'"+ops+"'")	
 	end
@@ -80,11 +82,7 @@ Then(/^Session ([\w\d]+). I should see the ([\w \& ]+) Listings$/) do |session, 
 	set_default_device($session[session])
 	if listname == "CarFinder"
 		var = query("* id:'label_text_view'", :text)
-		puts var
-	elsif listname ==  "Scan & Shop"
-	    var = query("* id:'label_text_view'", :text)
-	    var = var + query("* id:'buttonApply1'", :text)
-	    puts var    		
+		puts var   		
 	elsif listname == "Application History"
 	    var = query("* id:'label_text_view'", :text)
 	    var = var + query("* id:'carDetailsTextView'", :text)
@@ -103,6 +101,15 @@ Then(/^Session ([\w\d]+). I should see the ([\w \& ]+) Listings$/) do |session, 
 		puts "Wrong input"
 	end	
 end
+
+Then(/^Session ([\w\d]+). I should see camera and basket under Scan & Shop$/) do |session|
+	set_default_device($session[session])
+	check_element_exists("* id:'action_basket'")
+	check_element_exists("* id:'barcode_viewfinder_rectangle'")
+	var = query("* id:'barcode_instructions_text'", :text)[0]
+	puts var
+	check_element_exists("* id:'preview_container'")
+end	
 
 ##Then Uninstall all apps
 Then(/^Uninstall all apps$/) do
