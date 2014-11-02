@@ -31,13 +31,13 @@ Then(/^Session ([\w\d]+). Verify car ([\w ]+) is being added to Garage$/) do |se
   end
 end
 
-##Verify Transformers Optimus Prime car is added 1-times in Application History with current date
+
 Then(/^Session ([\w\d]+). Verify ([\w ]+) car is added ([\d]+)-times in Application History with current date/) do |session,carName,times|
   set_default_device($session[session])
   sleep 3
   flag=true
   currDate=Time.new.strftime("%d/%m/%Y")
-  arr_carName=query("* id:'application_history_list_name_text_view'", :text)
+  arr_carName=query("* text:'"+carName.to_s+"'")
   if element_exists("* text:'"+carName.to_s+"'")
      flag=true
   else
@@ -50,7 +50,20 @@ Then(/^Session ([\w\d]+). Verify ([\w ]+) car is added ([\d]+)-times in Applicat
     flag=false
     fail("No. of times is not as expected")
   end
-  
+   i=0
+   while i < 10
+     arr=query("*", :text)
+     junk_index=arr.each_index.select{|k| arr[k] == carName.to_s}
+     str=query("*", :text)[junk_index[0]+2]
+     if str == currDate
+       flag=true
+     else
+       flag=false
+       fail("Date not matching")
+     end
+     scroll_down
+     i+=1
+   end
   ##application_history_list_date_text_view
   ##application_history_list_name_text_view
 end 

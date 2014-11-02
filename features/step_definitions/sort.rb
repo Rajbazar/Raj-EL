@@ -198,7 +198,6 @@ Then(/^Session ([\w\d]+). Select car ([\w\d -]+)$/) do |session,carName|
     rescue
     end
     if element_exists("* {text CONTAINS '"+carName.to_s+"'}")
-      scroll_down
       touch("* {text CONTAINS '"+carName.to_s+"'}")
       break
     end
