@@ -135,7 +135,7 @@ Then(/^Session ([\w\d]+). Verify filter with text ([\w -\.]+)$/) do |session,tex
       sleep 10
       text_price=fields[0].delete! ','
       text_price=text_price.to_i
-      act_price=query("* id:'car_details_label_view_1' * index:2", :text)[0].delete! 'KZT ,'
+      act_price=query("* id:'details_price_label_view' * index:2", :text)[0].delete! 'KZT ,'
       act_price=act_price.to_i
       if act_price <= text_price
         flag=true
