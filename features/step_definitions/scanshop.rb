@@ -41,6 +41,7 @@ Then(/^Open CMS Webportal and grep information$/) do
     code_eval["qr#{i}.png"]= driver.table[4][1].text
     driver.back
     File.delete("#{currDir}/qr#{i}.png")
+    sleep 3
     i+=1
    end
    driver.close

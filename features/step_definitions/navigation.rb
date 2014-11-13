@@ -55,7 +55,9 @@ Then(/^Session ([\w\d]+). I tap on ([\w \& :]+)$/) do |session,ops|
   elsif ops == "filter button"
     touch("* id:'filter_button'")
   elsif ops == "Change language"
-   	touch("* id:'more_change_language_text_view'")	 	  
+   	touch("* id:'more_change_language_text_view'")
+  elsif ops == "Basket"
+  	tap_mark 'action_basket'	 		 	  
 	else	
 		touch("* text:'"+ops+"'")	
 	end

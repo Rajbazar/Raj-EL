@@ -67,3 +67,33 @@ Then(/^Session ([\w\d]+). Verify ([\w ]+) car is added ([\d]+)-times in Applicat
   ##application_history_list_date_text_view
   ##application_history_list_name_text_view
 end 
+
+
+Then(/^Session ([\w\d]+). Verify that basket has atleast ([\d]+) products$/) do |session,val|
+  set_default_device($session[session])
+  sleep 3
+  tmp=query("* id:'basket_total_items_text'", :text)[0]
+  m=/Total \(([\d]+)/.match(tmp)
+  no_items=m.captures[0] 
+  if no_items.to_i >= val.to_i
+    puts "No of items greater or equal to "+val
+  else
+    fail("Value is less then expected")
+  end 
+end
+
+##Then Session S1. Select product and apply Loan
+Then(/^Session ([\w\d]+). Select product and apply Loan$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  touch(query("* id:'image_view_product'")[0])
+  sleep 3
+  tap_mark 'details_appy_loan_button'
+  sleep 3
+  tap_mark 'action_submit'
+  sleep 3
+  tap_mark 'I Understand'
+  sleep 5
+end
+
+
