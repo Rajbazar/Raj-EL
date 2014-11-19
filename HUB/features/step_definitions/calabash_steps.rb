@@ -13,16 +13,22 @@ Then(/^Session ([\w\d]+). I tap on ([\w ]+)$/) do |session,ops|
   elsif ops == "myAccount"
   	tap_mark $id_config["left_menu_myaccount"]
   elsif ops == "info"
+    scroll_down
     tap_mark $id_config["left_menu_info"] 
   elsif ops == "debug"
-    tap_mark $id_config["left_menu_debug"] 							
+    scroll_down
+    tap_mark $id_config["left_menu_debug"] 
+   elsif ops == "ChechAvailability"
+    tap_mark $id_config["ChechAvailability"]  
+    elsif ops == "Search"
+     tap_mark $id_config["room_search"]                                        							
   else
   	puts "ID not Found"
   end
  end 	
 
  ##Then Session S1. Display AppVersion
-Then(/^Session ([\w\d]+). Display ([\w ]+)$/) do |session,ops|
+Then(/^Session ([\w\d]+). Display ([\w]+)$/) do |session,ops|
  	set_default_device($session[session])
   	sleep 3
   	if ops == "AppVersion"
