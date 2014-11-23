@@ -11,15 +11,15 @@ Feature: Demo Feature
 
 @Android @HUB-01
 Scenario: Tapping elements throught the App
- Given Session S1. I tap on LeftMenu
-  Then Session S1. I tap on myStay
-  When Session S1. I tap on LeftMenu
-  Then Session S1. I tap on myBookings
-  When Session S1. I tap on LeftMenu
-  Then Session S1. I tap on myAccount
-  When Session S1. I tap on LeftMenu
-  Then Session S1. I tap on info
-  When Session S1. I tap on LeftMenu
-  Then Session S1. I tap on debug
-  When Session S1. I tap on LeftMenu
-  Then Session S1. Display AppVersion
+   Given Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myStay
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myBookings
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myAccount
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on info
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on debug
+    When Session S1. I tap on LeftMenu
+    Then Session S1. Display AppVersion

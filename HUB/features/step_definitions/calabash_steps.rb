@@ -23,7 +23,7 @@ Then(/^Session ([\w\d]+). I tap on ([\w ]+)$/) do |session,ops|
     elsif ops == "Search"
      tap_mark $id_config["room_search"]                                        							
   else
-  	puts "ID not Found"
+    tap_mark "#{ops.to_s}"
   end
  end 	
 
@@ -36,4 +36,14 @@ Then(/^Session ([\w\d]+). Display ([\w]+)$/) do |session,ops|
   	else
   		puts "ID not Found"
 	end
+end
+
+Then(/^Session ([\w\d]+). Scroll ([\w]+)$/) do |session,operation|
+  set_default_device($session[session])
+  sleep 3
+  if operation == "down"
+    scroll_down
+  elsif operation == "up"
+    scroll_up
+  end
 end
