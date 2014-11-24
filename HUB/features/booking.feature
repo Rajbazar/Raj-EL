@@ -23,17 +23,17 @@ Scenario: Tapping elements throught the App
   And Session S1. Scroll down
   And Session S1. Scroll down
   And Session S1. I tap on Breakfast for all
-  And Session S1. Save Breakfast price for 2
+  And Session S1. Save 3 days Breakfast price for 2 persons
   And Session S1. I tap on Next
   And Session S1. Add charity Fund
-  And Session S1. I tap on work
   And Session S1. I select Terms and Conditions
   And Session S1. I fill Security code
   Then Session S1. I tap on Work
   Then Session S1. I tap on Pay
   And Session S1. Verify complete flexi price
-  And Session S1. I tap on Authunticate
+  And Session S1. I tap on Authunticated
   Then Session S1. I should be able to see Booking confirmed screen
+  Then Session S1. I tap on Done
 
 
 

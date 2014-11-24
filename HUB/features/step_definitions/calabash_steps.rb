@@ -21,7 +21,12 @@ Then(/^Session ([\w\d]+). I tap on ([\w ]+)$/) do |session,ops|
    elsif ops == "ChechAvailability"
     tap_mark $id_config["ChechAvailability"]  
     elsif ops == "Search"
-     tap_mark $id_config["room_search"]                                        							
+     tap_mark $id_config["room_search"]
+    elsif ops == "Authunticated"
+     scroll_down
+     scroll_down
+     touch(query("webView css:'*' value:'Authenticated'"))
+     sleep 15
   else
     tap_mark "#{ops.to_s}"
   end

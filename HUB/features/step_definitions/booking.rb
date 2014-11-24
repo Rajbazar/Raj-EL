@@ -37,13 +37,13 @@ Then(/^Session ([\w\d]+). Book now for ([\w ]+)$/) do |session,priceType|
   set_default_device($session[session])
   sleep 3
   if priceType == "Hub flex Price"
-    touch(query("* id:'"+$id_config["book_now"]+"'")[0])
     price_val=query("* id:'txt_rate_price'",:text)[0]
-    $flexi_price=price_val.gsub(/\u00A3/,'').to_f
+    $flexi_price=price_val.gsub(/£/,'').to_f
+    touch(query("* id:'"+$id_config["book_now"]+"'")[0])
   else
-    touch(query("* id:'"+$id_config["book_now"]+"'")[1])
     price_val=query("* id:'txt_rate_price'",:text)[1]
-    $saver_price=price_val.gsub(/\u00A3/,'').to_f
+    $saver_price=price_val.gsub(/£/,'').to_f
+    touch(query("* id:'"+$id_config["book_now"]+"'")[1])
   end
 end
 
@@ -55,6 +55,7 @@ Then(/^Session ([\w\d]+). Enter user details$/) do |session|
   tap_mark $id_config["left_menu"]
   sleep 2
   tap_mark $id_config["left_menu_myaccount"]
+  sleep 5
   query("* id:'"+$id_config["username_field"]+"'", {:setText => ""})
   query("* id:'"+$id_config["username_field"]+"'", {:setText => "#{$Configuration["UserEmail"]}"})
   query("* id:'"+$id_config["password_field"]+"'", {:setText => ""})
@@ -256,6 +257,14 @@ Then(/^Session ([\w\d]+). Add charity Fund$/) do |session|
   set_default_device($session[session])
   sleep 3
   tap_mark "#{$id_config["charity_fund"]}"
+  begin
+  $flexi_price+=1.0
+  rescue
+  end
+  begin
+  $saver_price+=1.0
+  rescue
+  end
 end
 
 ##And Session S1. I select Terms and Conditions
@@ -279,21 +288,57 @@ Then(/^Session ([\w\d]+). I fill Security code$/) do |session|
 end
 
 ##And Session S1. Save Breakfast price
-Then(/^Session ([\w\d]+). Save Breakfast price for ([\d]+)$/) do |session,num|
+Then(/^Session ([\w\d]+). Save ([\d]+) days Breakfast price for ([\d]+) persons$/) do |session,days,num|
   set_default_device($session[session])
   sleep 3
-  price_val=query("* id:'txt_price'", :text)[0].gsub(/\u00A3/,'')
+  price_val=query("* id:'txt_price'", :text)[0].gsub(/\£/,'')
   act_breakfast_price=price_val.gsub(/ per person, per day/,'').to_f
-  act_breakfast_price=act_breakfast_price*num.to_i
+  act_breakfast_price=act_breakfast_price*num.to_f*days.to_f
+  begin
   $flexi_price=$flexi_price+act_breakfast_price
+  puts "Price with Breakfast: "+$flexi_price.to_s
+  rescue
+  end
+  begin
   $saver_price=$saver_price+act_breakfast_price
+  puts "Price with Breakfast: "+$saver_price.to_s
+  rescue
+  end
 end
 
 ##And Session S1. Verify complete flexi price
 Then(/^Session ([\w\d]+). Verify complete ([\w ]+)$/) do |session,pricetype|
+  set_default_device($session[session])
+  sleep 20
+  a=query("webView css:'*'", :textContent)[22]
+      k=a.split("Amount:")
+      disp_price=k[1].to_f
   if pricetype == "flexi price"
+    if disp_price == $flexi_price
+      puts "Pass"
+    else
+      fail("Disp price:" + disp_price.to_s)
+      fail("Calculated price:" + $flexi_price.to_s)
+    end
   else
+    if disp_price == $saver_price
+      puts "Pass"
+    else
+      fail("Disp price:" + disp_price.to_s)
+      fail("Calculated price:" + $saver_price.to_s)
+    end
   end
 end
 
+##Then Session S1. I should be able to see Booking confirmed screen
+Then(/^Session ([\w\d]+). I should be able to see Booking confirmed screen$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  var=query("* id:'#{$id_config["ref_code"]}'", :text)[0]
+  puts "Booking Reference: "+var
+  var=query("* id:'#{$id_config["date_code"]}'", :text)[0]
+  puts "Booking dates: "+var
+  var=query("* id:'#{$id_config["email_code"]}'", :text)[0]
+  puts "Email sent to: "+var
+end
 
