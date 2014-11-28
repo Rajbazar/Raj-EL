@@ -341,4 +341,3 @@ Then(/^Session ([\w\d]+). I should be able to see Booking confirmed screen$/) do
   var=query("* id:'#{$id_config["email_code"]}'", :text)[0]
   puts "Email sent to: "+var
 end
-

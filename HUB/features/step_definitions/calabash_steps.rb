@@ -27,6 +27,9 @@ Then(/^Session ([\w\d]+). I tap on ([\w ]+)$/) do |session,ops|
      scroll_down
      touch(query("webView css:'*' value:'Authenticated'"))
      sleep 15
+    elsif ops == "backButton"
+      sleep 3
+      tap_mark $id_config["backButton"]
   else
     tap_mark "#{ops.to_s}"
   end
