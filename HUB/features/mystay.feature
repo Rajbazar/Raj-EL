@@ -1,0 +1,31 @@
+Feature: MyStay Feature
+  As a HUB app user
+  I want to navigate from My Stay
+  So that I can able control my room
+
+  @Android @HUB-401
+  Scenario: As an a HUB user, I would  navigate from my Stay to control Lighting
+
+    Then Session S1. Clear data
+    Given Session S1. I am on HUB home page
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myBookings
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on debug
+    And Session S1. I tap on DontBotherWifiCheck
+    And Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myBookings
+    When Session S1. I tap on LeftMenu
+    And Session S1. Scroll up
+    And Session S1. Scroll up
+    When Session S1. I tap on myStay
+    When Session S1. I tap on Connect Now
+    Then Session S1. Enter email and password for room-connection
+    And Session S1. Control Lighting
+    And Session S1. Switch ON Light if OFF
+    Then Session S1. Select full light bulb
+    And Session S1. Decrease Brightness
+    And Session S1. Increase Brightness
+    And Session S1. Switch OFF Light
+    Then Session S1. I tap on lightCloseButton
+

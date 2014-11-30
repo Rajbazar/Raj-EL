@@ -1,7 +1,7 @@
 require 'calabash-android/calabash_steps'
 
 ##Given Session S1. I tap on LeftMenu
-Then(/^Session ([\w\d]+). I tap on ([\w ]+)$/) do |session,ops|
+Then(/^Session ([\w\d]+). I tap on ([\w ,']+)$/) do |session,ops|
   set_default_device($session[session])
   sleep 5
   if ops == "LeftMenu"
@@ -30,6 +30,13 @@ Then(/^Session ([\w\d]+). I tap on ([\w ]+)$/) do |session,ops|
     elsif ops == "backButton"
       sleep 3
       tap_mark $id_config["backButton"]
+    elsif ops == "OK Iam happy with this"
+      tap_mark $id_config["happy_button"]
+    elsif ops == "DontBotherWifiCheck"
+      sleep 2
+      tap_mark $id_config["wifi_check"]
+    elsif ops == "lightCloseButton"
+      tap_mark $id_config["light_close"]
   else
     tap_mark "#{ops.to_s}"
   end
@@ -54,4 +61,13 @@ Then(/^Session ([\w\d]+). Scroll ([\w]+)$/) do |session,operation|
   elsif operation == "up"
     scroll_up
   end
+end
+
+##Then Session S1. I am on HUB home page
+Then(/^Session ([\w\d]+). I am on HUB home page$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  tap_mark $id_config["left_menu"]
+  sleep 2
+  tap_mark "hub by Premier Inn"
 end

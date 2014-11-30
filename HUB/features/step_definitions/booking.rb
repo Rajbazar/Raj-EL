@@ -2,7 +2,7 @@
 Then(/^Session ([\w\d]+). Select ([\w]+) as ([\w\d,]+)$/) do |session,action,date|
   set_default_device($session[session])
     sleep 3
-    def date_select(str)
+    def date_select_arrive(str)
       a=str
       a=a.split(",")
       date_no=a[0].to_s
@@ -10,25 +10,37 @@ Then(/^Session ([\w\d]+). Select ([\w]+) as ([\w\d,]+)$/) do |session,action,dat
       date_year=a[2].to_s
       month_year=date_month + " " + date_year
       i=0
+      if element_exists("* text:'"+month_year+"'")
+        curr_date=Time.new.day
+        if date_no.to_i >= curr_date
+          touch(query("* text:'"+date_no+"' * enabled:'true'")[0])
+        else
+          scroll_down
+          touch(query("* text:'"+date_no+"' * enabled:'true'")[0])
+        end
+      else
       while (i<20)
-        scroll_down
         if element_exists("* text:'"+month_year+"'")
           scroll_down
           break
+        else
+          scroll_down
         end
         i+=1  
       end
       touch(query("* text:'"+date_no+"' * enabled:'true'")[0])
-      puts "Date selected"
-      while(i>=0)
-        scroll_up
-        i-=1
-      end  
+      end
+     end
+    def date_select_leave(str)
+      a=str
+      a=a.split(",")
+      date_no=a[0].to_s
+      touch(query("* text:'"+date_no+"' * enabled:'true'")[0])
     end
     if action == "ArrivingDate"
-      date_select(date.to_s)
+      date_select_arrive(date.to_s)
     else
-      date_select(date.to_s)
+      date_select_leave(date.to_s)
     end
 end
 
@@ -93,9 +105,10 @@ Then(/^Session ([\w\d]+). Enter user details$/) do |session|
   system("#{default_device.adb_command} shell input keyevent KEYCODE_BACK")
   sleep 3
   tap_mark "#{$id_config["user_postcode"]}"
-  sleep 3
+  sleep 5
   query("* id:'"+$id_config["user_postcode"]+"'", {:setText => ""})
   query("* id:'"+$id_config["user_postcode"]+"'", {:setText => "#{$Configuration["UserPincode"]}"})
+  sleep 5
   system("#{default_device.adb_command} shell input keyevent KEYCODE_BACK")
   sleep 2
   query("* id:'"+$id_config["user_addressline1"]+"'", {:setText => ""})

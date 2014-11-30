@@ -1,4 +1,4 @@
-Feature: Demo Feature
+Feature: Navigation Feature
    As a HUB app user
    I want to navigate the app from home screen
    So that I can  see all the functions working as per expected 
