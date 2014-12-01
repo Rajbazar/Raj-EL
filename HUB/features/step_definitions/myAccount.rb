@@ -30,3 +30,31 @@ Then(/^Session ([\w\d]+). Display user ([\w]+)$/) do |session,ops|
     puts query("* id:'"+$id_config["card_endate"]+"'", :text)[0]
   end
 end
+
+##Then Session S1. Enter feedback user details
+
+Then(/^Session ([\w\d]+). Enter feedback user details and comments$/) do |session|
+tap_mark "#{$id_config["user_title"]}"
+sleep 2
+i=0
+while (i < 5)
+  if element_exists("* text:'#{$Configuration["UserTitle"]}'")
+    tap_mark "#{$Configuration["UserTitle"]}"
+    break
+  else
+    scroll_down
+  end
+  i+=1
+end
+
+sleep 2
+query("* id:'"+$id_config["user_firstname"]+"'", {:setText => ""})
+query("* id:'"+$id_config["user_firstname"]+"'", {:setText => "#{$Configuration["UserName"]}"})
+query("* id:'"+$id_config["user_lastname"]+"'", {:setText => ""})
+query("* id:'"+$id_config["user_lastname"]+"'", {:setText => "#{$Configuration["Userlastname"]}"})
+query("* id:'"+$id_config["user_email"]+"'", {:setText => ""})
+query("* id:'"+$id_config["user_email"]+"'", {:setText => "#{$Configuration["UserEmail"]}"})
+sleep 2
+query("* id:'"+$id_config["feedback_comment"]+"'", {:setText => ""})
+query("* id:'"+$id_config["feedback_comment"]+"'", {:setText => "I like all cool features of this app!!"})
+end

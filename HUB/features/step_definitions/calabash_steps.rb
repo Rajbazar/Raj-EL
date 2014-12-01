@@ -1,7 +1,7 @@
 require 'calabash-android/calabash_steps'
 
 ##Given Session S1. I tap on LeftMenu
-Then(/^Session ([\w\d]+). I tap on ([\w ,']+)$/) do |session,ops|
+Then(/^Session ([\w\d]+). I tap on ([\w ,'&]+)$/) do |session,ops|
   set_default_device($session[session])
   sleep 5
   if ops == "LeftMenu"
@@ -37,6 +37,8 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,']+)$/) do |session,ops|
       tap_mark $id_config["wifi_check"]
     elsif ops == "lightCloseButton"
       tap_mark $id_config["light_close"]
+    elsif ops == "SendFeedback"
+      tap_mark $id_config["feedback"]
   else
     tap_mark "#{ops.to_s}"
   end
