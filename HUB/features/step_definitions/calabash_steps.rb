@@ -25,7 +25,17 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&]+)$/) do |session,ops|
     elsif ops == "Authunticated"
      scroll_down
      scroll_down
-     touch(query("webView css:'*' value:'Authenticated'"))
+     arr=query("WebView css:'*'")
+     i=0
+     while i < arr.length
+      a=query("WebView css:'*'")[i]
+      if a["value"] == "Authenticated"
+        touch(query("WebView css:'*'")[i])
+        break
+      else
+        i+=1
+      end  
+     end
      sleep 15
     elsif ops == "backButton"
       sleep 3

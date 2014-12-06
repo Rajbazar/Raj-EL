@@ -21,7 +21,7 @@ Then(/^Session ([\w\d]+). Select ([\w]+) as ([\w\d,]+)$/) do |session,action,dat
       else
       while (i<20)
         if element_exists("* text:'"+month_year+"'")
-          scroll_down
+          /scroll_down/
           break
         else
           scroll_down
@@ -101,9 +101,15 @@ Then(/^Session ([\w\d]+). Enter user details$/) do |session|
   scroll_down
   sleep 5
   tap_mark "#{$id_config["user_postcode"]}"
-  sleep 3
+  begin
+  tap_mark 'search_close_btn'
+  rescue
+  end
+  sleep 5
   system("#{default_device.adb_command} shell input keyevent KEYCODE_BACK")
-  sleep 3
+  sleep 2
+  system("#{default_device.adb_command} shell input keyevent KEYCODE_BACK")
+  sleep 5
   tap_mark "#{$id_config["user_postcode"]}"
   sleep 5
   query("* id:'"+$id_config["user_postcode"]+"'", {:setText => ""})
@@ -323,9 +329,10 @@ end
 Then(/^Session ([\w\d]+). Verify complete ([\w ]+)$/) do |session,pricetype|
   set_default_device($session[session])
   sleep 20
+  /scroll_down/
   a=query("webView css:'*'", :textContent)[22]
       k=a.split("Amount:")
-      disp_price=k[1].to_f
+      disp_price=k[1].to_f   
   if pricetype == "flexi price"
     if disp_price == $flexi_price
       puts "Pass"
