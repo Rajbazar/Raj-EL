@@ -47,6 +47,8 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&]+)$/) do |session,ops|
       tap_mark $id_config["wifi_check"]
     elsif ops == "lightCloseButton"
       tap_mark $id_config["light_close"]
+    elsif ops == "tempCloseButton"
+      tap_mark $id_config["temp_close"]
     elsif ops == "SendFeedback"
       tap_mark $id_config["feedback"]
   else

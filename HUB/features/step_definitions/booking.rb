@@ -254,7 +254,7 @@ end
 
 
 ##And Session S1. Select Nationality as United Kingdom
-Then(/^Session ([\w\d]+). Select Nationality as ([\w ]+)$/) do |session, nationality|
+Then(/^Session ([\w\d]+). Select Nationality ([\w ]+)$/) do |session, nationality|
   set_default_device($session[session])
   sleep 3
   tap_mark $id_config["mainguest_nationality"]
@@ -282,6 +282,20 @@ Then(/^Session ([\w\d]+). Add charity Fund$/) do |session|
   end
   begin
   $saver_price+=1.0
+  rescue
+  end
+end
+
+##And Session S1. Add Transaction fee
+Then(/^Session ([\w\d]+). Add Transaction fee$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  begin
+    $flexi_price+=2.0
+  rescue
+  end
+  begin
+    $saver_price+=2.0
   rescue
   end
 end
@@ -360,4 +374,21 @@ Then(/^Session ([\w\d]+). I should be able to see Booking confirmed screen$/) do
   puts "Booking dates: "+var
   var=query("* id:'#{$id_config["email_code"]}'", :text)[0]
   puts "Email sent to: "+var
+end
+
+##Given Session S1. Enter Passport details
+Then(/^Session ([\w\d]+). Enter Passport details$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  scroll_down
+  scroll_down
+  scroll_down
+  scroll_down
+  scroll_down
+  query("* id:'"+$id_config["passport_id"]+"'", {:setText => ""})
+  query("* id:'"+$id_config["passport_id"]+"'", {:setText => "#{$Configuration["PassportNumber"]}"})
+  query("* id:'"+$id_config["passport_location"]+"'", {:setText => ""})
+  query("* id:'"+$id_config["passport_location"]+"'", {:setText => "#{$Configuration["PassportIssuePlace"]}"})
+  query("* id:'"+$id_config["passport_nextdest"]+"'", {:setText => ""})
+  query("* id:'"+$id_config["passport_nextdest"]+"'", {:setText => "#{$Configuration["PassportNextdestination"]}"})
 end

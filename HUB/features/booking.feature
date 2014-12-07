@@ -17,7 +17,7 @@ Scenario: Booking the room as a new HUB user
   Then Session S1. I should see Hub Flex Price and Hub Saver price
   Then Session S1. Book now for Hub flex Price
   And Session S1. I tap on Next
-  And Session S1. Select Nationality as United Kingdom
+  And Session S1. Select Nationality United Kingdom
   And Session S1. Enter second guest details
   And Session S1. I tap on Next
   And Session S1. Scroll down
@@ -47,7 +47,7 @@ Scenario: Booking the room as an a Existing HUB user for 1 Adult only
   Then Session S1. I should see Hub Flex Price and Hub Saver price
   Then Session S1. Book now for Hub flex Price
   And Session S1. I tap on Next
-  And Session S1. Select Nationality as United Kingdom
+  And Session S1. Select Nationality United Kingdom
   And Session S1. I tap on Next
   And Session S1. Scroll down
   And Session S1. Scroll down
@@ -78,7 +78,7 @@ Scenario: Booking the room as an a Existing HUB user for 1 Adult only
     Then Session S1. I should see Hub Flex Price and Hub Saver price
     Then Session S1. Book now for Hub saver Price
     And Session S1. I tap on Next
-    And Session S1. Select Nationality as United Kingdom
+    And Session S1. Select Nationality United Kingdom
     And Session S1. I tap on Next
     And Session S1. Scroll down
     And Session S1. Scroll down
@@ -110,7 +110,7 @@ Scenario: Booking with Window less room as an a Existing HUB user
   Then Session S1. I should see Hub Flex Price and Hub Saver price
   Then Session S1. Book now for Hub flex Price
   And Session S1. I tap on Next
-  And Session S1. Select Nationality as United Kingdom
+  And Session S1. Select Nationality United Kingdom
   And Session S1. I tap on Next
   And Session S1. Scroll down
   And Session S1. Scroll down
@@ -127,6 +127,36 @@ Scenario: Booking with Window less room as an a Existing HUB user
   Then Session S1. I should be able to see Booking confirmed screen
   Then Session S1. I tap on Done
 
+@Android @HUB-25
+  Scenario: Booking for different nationality then UK
+    Given Session S1. I am on HUB home page
+    And I wait for 5 seconds
+    Given Session S1. I tap on ChechAvailability
+    Then Session S1. Select ArrivingDate as 3,March,2015
+    Then Session S1. Select LeavingDate as 5,March,2015
+    Then Session S1. Book Standard room for 1 adult
+    Then Session S1. I tap on Search
+    Then Session S1. I should see Hub Flex Price and Hub Saver price
+    Then Session S1. Book now for Hub saver Price
+    And Session S1. I tap on Next
+    And Session S1. Select Nationality Afghanistan
+    Then Session S1. Enter Passport details
+    And Session S1. I tap on Next
+    And Session S1. Scroll down
+    And Session S1. Scroll down
+    And Session S1. I tap on Breakfast for all
+    And Session S1. Save 2 days Breakfast price for 1 persons
+    And Session S1. I tap on Next
+    And Session S1. Add Transaction fee
+    And Session S1. Add charity Fund
+    And Session S1. I select Terms and Conditions
+    And Session S1. I fill Security code
+    Then Session S1. I tap on Work
+    Then Session S1. I tap on Pay
+    And Session S1. Verify complete saver price
+    And Session S1. I tap on Authunticated
+    Then Session S1. I should be able to see Booking confirmed screen
+    Then Session S1. I tap on Done
 
 
 
