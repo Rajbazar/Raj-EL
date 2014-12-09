@@ -70,6 +70,10 @@ Then(/^Session ([\w\d]+). Switch ON ([\w]+) if OFF$/) do |session,type|
     if element_exists("* id:'temp_spotlight'")
       tap_mark  $id_config["temp_switch"]
     end
+  elsif type == "TVControl"
+    if element_exists("* id:'tv_remote_spotlight'")
+      tap_mark  $id_config["tv_switch"]
+    end
   end
 end
 
@@ -163,4 +167,57 @@ Then(/^Session ([\w\d]+). Display room connect code$/) do |session|
   set_default_device($session[session])
   sleep 3
   puts "Room Connect code: " + query("* id:'pair_code'", :text)[0].to_s
+end
+
+##And Session S1. I change channel up
+Then(/^Session ([\w\d]+). I change channel ([\w]+)$/) do |session,channel_ops|
+  set_default_device($session[session])
+  sleep 3
+  if channel_ops == "up"
+    tap_mark $id_config["tv_channel_up"]
+  elsif channel_ops == "down"
+    tap_mark $id_config["tv_channel_down"]
+  end
+end
+
+##Then Session S1. Display channel information
+Then(/^Session ([\w\d]+). Display channel information$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  puts "Channel information: " + query("* id:'"+$id_config["tv_channel_info"]+"'", :text)[0].to_s
+end
+
+
+##When Session S1. I mute the TV volume
+Then(/^Session ([\w\d]+). I ([\w]+) the TV volume$/) do |session,volume_ops|
+  set_default_device($session[session])
+  sleep 3
+  if volume_ops == "mute"
+    tap_mark $id_config["tv_mute"]
+  elsif volume_ops == "increase"
+    tap_mark $id_config["tv_volume_up"]
+  elsif volume_ops == "decrease"
+    tap_mark $id_config["tv_volume_down"]
+  end
+end
+
+##Then Session S1. I should see the selected channel description
+Then(/^Session ([\w\d]+). I should see the selected channel description$/) do |session|
+  set_default_device($session[session])
+  sleep 3
+  arr=query("*",:text)
+  i=0
+  while i < arr.length
+    if arr[i] == "Watching"
+       touch(query("*")[i+1])
+       show_name = query("*",:text)[i+2]
+       show_details = query("* id:'"+$id_config["current_show_details"]+"'",:text)[0]
+       touch(query("*")[i+1])
+       break
+    else
+      i+=1
+    end
+  end
+  puts "Current show/movie name: "+show_name.to_s
+  puts "Current show/movie details: "+show_details.to_s
 end

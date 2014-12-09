@@ -111,3 +111,93 @@ Feature: MyStay Feature
     When Session S1. I tap on myStay
     When Session S1. I tap on Help
     Then Session S1. Display room connect code
+
+
+  @Android @HUB-407
+  Scenario: As an a HUB user, I would like to control the TV channels
+
+    Then Session S1. Clear data
+    Given Session S1. I am on HUB home page
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myBookings
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on debug
+    And Session S1. I tap on DontBotherWifiCheck
+    And Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myBookings
+    When Session S1. I tap on LeftMenu
+    And Session S1. Scroll up
+    And Session S1. Scroll up
+    When Session S1. I tap on myStay
+    When Session S1. I tap on Connect Now
+    Then Session S1. Enter email and password for room-connection
+    And Session S1. Control TV
+    And I wait for 30 seconds
+    When Session S1. I tap on OK, got it
+    And Session S1. Switch ON TVControl if OFF
+    Then Session S1. I tap on Controls
+    And Session S1. I change channel up
+    When Session S1. I tap on info
+    And I wait for 3 seconds
+    Then Session S1. Display channel information
+    Then Session S1. I tap on tvCloseButton
+
+
+
+  @Android @HUB-408
+  Scenario: As an a HUB user, I would like to control the TV volumes
+
+    Then Session S1. Clear data
+    Given Session S1. I am on HUB home page
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myBookings
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on debug
+    And Session S1. I tap on DontBotherWifiCheck
+    And Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myBookings
+    When Session S1. I tap on LeftMenu
+    And Session S1. Scroll up
+    And Session S1. Scroll up
+    When Session S1. I tap on myStay
+    When Session S1. I tap on Connect Now
+    Then Session S1. Enter email and password for room-connection
+    And Session S1. Control TV
+    And I wait for 30 seconds
+    When Session S1. I tap on OK, got it
+    And Session S1. Switch ON TVControl if OFF
+    Then Session S1. I tap on Controls
+    When Session S1. I mute the TV volume
+    When Session S1. I increase the TV volume
+    When Session S1. I decrease the TV volume
+    Then Session S1. I tap on tvCloseButton
+
+  @Android @HUB-409
+  Scenario: As an a HUB user, I would like to control the TV channels
+
+    Then Session S1. Clear data
+    Given Session S1. I am on HUB home page
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myBookings
+    When Session S1. I tap on LeftMenu
+    Then Session S1. I tap on debug
+    And Session S1. I tap on DontBotherWifiCheck
+    And Session S1. I tap on LeftMenu
+    Then Session S1. I tap on myBookings
+    When Session S1. I tap on LeftMenu
+    And Session S1. Scroll up
+    And Session S1. Scroll up
+    When Session S1. I tap on myStay
+    When Session S1. I tap on Connect Now
+    Then Session S1. Enter email and password for room-connection
+    And Session S1. Control TV
+    And I wait for 30 seconds
+    When Session S1. I tap on OK, got it
+    And Session S1. Switch ON TVControl if OFF
+    Then Session S1. I tap on TV guide
+    And I wait for 15 seconds
+    Then Session S1. I should see the selected channel description
+    Then Session S1. I tap on Controls
+    Then Session S1. I tap on tvCloseButton
+
+

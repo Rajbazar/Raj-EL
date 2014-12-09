@@ -13,9 +13,17 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&]+)$/) do |session,ops|
   elsif ops == "myAccount"
   	tap_mark $id_config["left_menu_myaccount"]
   elsif ops == "info"
+    begin
     scroll_down
-    tap_mark $id_config["left_menu_info"] 
+    tap_mark $id_config["left_menu_info"]
+    rescue
+    end
+    begin
+      tap_mark "#{ops.to_s}"
+    rescue
+    end
   elsif ops == "debug"
+    scroll_down
     scroll_down
     tap_mark $id_config["left_menu_debug"] 
    elsif ops == "ChechAvailability"
@@ -41,6 +49,7 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&]+)$/) do |session,ops|
       sleep 3
       tap_mark $id_config["backButton"]
     elsif ops == "OK Iam happy with this"
+      wait_for_elements_exist( ["* id:'"+$id_config["happy_button"]+"'"], :timeout => 20)
       tap_mark $id_config["happy_button"]
     elsif ops == "DontBotherWifiCheck"
       sleep 2
@@ -51,6 +60,8 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&]+)$/) do |session,ops|
       tap_mark $id_config["temp_close"]
     elsif ops == "SendFeedback"
       tap_mark $id_config["feedback"]
+    elsif ops == "tvCloseButton"
+      tap_mark $id_config["tv_close"]
   else
     tap_mark "#{ops.to_s}"
   end
