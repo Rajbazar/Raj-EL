@@ -19,7 +19,7 @@ Scenario: Tapping elements throught the App
     Then Session S1. I tap on myAccount
     When Session S1. I tap on LeftMenu
     Then Session S1. I tap on info
-    When Session S1. I tap on LeftMenu
+    And Session S1. I tap on LeftMenu
     Then Session S1. I tap on debug
     When Session S1. I tap on LeftMenu
     Then Session S1. Display AppVersion

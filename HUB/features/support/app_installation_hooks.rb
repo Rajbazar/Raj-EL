@@ -1,11 +1,21 @@
+require 'yaml'
+$Configuration = YAML.load_file "setup.cfg"
+$id_config = YAML.load_file "config_ids.cfg"
+if $Configuration["S1DeviceType"] == "IOS" || $Configuration["S2DeviceType"] == "IOS"
+  require 'calabash-cucumber/cucumber'
+  def ios_connect(device_sessionid)
+ENV['DEVICE']="device" 
+    ENV['DEBUG']="1"    
+    ENV['DEVICE_ENDPOINT']=$Configuration[device_sessionid+"DeviceIP"]
+    ENV['DEVICE_TARGET']=$Configuration[device_sessionid+"Device"]
+    ENV['BUNDLE_ID']=$Configuration["iOSBundleID"]
+    ENV["APP_BUNDLE_PATH"]=$Configuration["iOSAppPath"]
+  end
+else
 require 'calabash-android/management/app_installation'
 require 'calabash-android/management/adb'
 require 'calabash-android/operations'
 include Calabash::Android::Operations
-require 'yaml'
-$Configuration = YAML.load_file "setup.cfg"
-$id_config = YAML.load_file "config_ids.cfg"
-
 $temp = 1
 def android_LaunchClient(session)
   ENV["ADB_DEVICE_ARG"]=$Configuration[session+"Device"].to_s
@@ -99,4 +109,5 @@ FeatureNameMemory = Class.new
 class << FeatureNameMemory
   @feature_name = nil
   attr_accessor :feature_name, :invocation
+end
 end
