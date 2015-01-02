@@ -1,5 +1,6 @@
 ## Then Session S1. Select ArrivingDate as 21,March,2015
 Then(/^Session ([\w\d]+). Select ([\w]+) as ([\w\d,]+)$/) do |session,action,date|
+  if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
     sleep 3
     def date_select_arrive(str)
@@ -42,10 +43,60 @@ Then(/^Session ([\w\d]+). Select ([\w]+) as ([\w\d,]+)$/) do |session,action,dat
     else
       date_select_leave(date.to_s)
     end
+  else
+    ##IOS Code starts
+    ios_connect(session)
+    sleep 3
+def date_select_arrive(str)
+    a=str
+    a=a.split(",")
+    date_no=a[0].to_s
+    date_month=a[1].to_s
+    date_year=a[2].to_s
+    month_year=date_month + " " + date_year
+    i=0
+    if element_exists("* text:'"+month_year+"'")
+            touch(query("* text:'"+date_no+"'")[0])
+            if element_exists("* text:'Date cannot be in the past'")
+              puts "Past date selected, change date in features"
+              else
+            end
+        else
+        while element_does_not_exist("* text:'"+month_year+"'")
+                scroll("UICollectionView", :right)
+                sleep 2
+        end
+        if query("* text:'"+date_no+"'").count > 1
+        touch(query("* text:'"+date_no+"'")[1])
+        else
+        touch(query("* text:'"+date_no+"'")[0])
+        end
+        if element_exists("* text:'Date cannot be in the past'")
+            puts "Past date selected, change date in features"
+        end
+    end
+end
+def date_select_leave(str)
+    a=str
+    a=a.split(",")
+    date_no=a[0].to_s
+    if query("* text:'"+date_no+"'").count > 1
+        touch(query("* text:'"+date_no+"'")[1])
+        else
+        touch(query("* text:'"+date_no+"'")[0])
+    end
+end
+if action == "ArrivingDate"
+    date_select_arrive(date.to_s)
+    else
+    date_select_leave(date.to_s)
+    end
+  end
 end
 
 
 Then(/^Session ([\w\d]+). Book now for ([\w ]+)$/) do |session,priceType|
+if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   sleep 3
   if priceType == "Hub flex Price"
@@ -57,11 +108,26 @@ Then(/^Session ([\w\d]+). Book now for ([\w ]+)$/) do |session,priceType|
     $saver_price=price_val.gsub(/£/,'').to_f
     touch(query("* id:'"+$id_config["book_now"]+"'")[1])
   end
+  else
+  ##IOS Code starts
+  ios_connect(session)
+  sleep 3
+  if priceType == "Hub flex Price"
+      price_val=query('label', :text)[8]
+      $flexi_price=price_val.gsub(/£/,'').to_f
+      touch(query("* text:'Book now'")[0])
+      else
+      price_val=query('label', :text)[12].to_s
+      $saver_price=price_val.gsub(/£/,'').to_f
+      touch(query("* text:'Book now'")[1])
+  end
+  end
 end
 
 
 ##Given Session S1. Enter user details
 Then(/^Session ([\w\d]+). Enter user details$/) do |session|
+  if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   sleep 3
   tap_mark $id_config["left_menu"]
@@ -138,9 +204,75 @@ Then(/^Session ([\w\d]+). Enter user details$/) do |session|
   end
   tap_mark 'Save'
   sleep 5
+else
+  ##IOS Code starts
+  ios_connect(session)
+  sleep 3
+  tap_mark "icon_navbar_menu"
+  sleep 2
+  tap_mark "my account"
+  sleep 5
+  clear_text("textField")
+  tap_mark "Email"
+  keyboard_enter_text "#{$Configuration["UserEmail"]}"
+  tap_mark "Password"
+  keyboard_enter_text "#{$Configuration["UserPassword"]}"
+  tap_mark 'Log in'
+  sleep 5
+  begin
+  tap_mark "OK"
+  rescue
+  end
+  tap_mark 'My details'
+  sleep 2
+  clear_text("textField")
+  sleep 2
+  tap_mark "Title"
+  tap_mark "#{$Configuration["UserTitle"]}"
+  sleep 2
+  tap_mark "First name"
+  keyboard_enter_text "#{$Configuration["UserName"]}"
+  tap_mark "Last name"
+  keyboard_enter_text "#{$Configuration["Userlastname"]}"
+  tap_mark "Mobile number"
+  keyboard_enter_text "#{$Configuration["UserNumber"]}"
+  scroll("*", :down)
+  sleep 2
+  tap_mark "Postcode"
+  sleep 5
+  begin
+  tap_mark "Cancel"
+  rescue
+  end
+  tap_mark "Postcode"
+  sleep 5
+  keyboard_enter_text "#{$Configuration["UserPincode"]}"
+  sleep 2
+  scroll("*", :down)
+  sleep 2
+  tap_mark "Address line 1"
+  keyboard_enter_text "#{$Configuration["UserFullAddress1"]}"
+  sleep 2
+  tap_mark "Address line 2"
+  keyboard_enter_text "#{$Configuration["UserFullAddress2"]}"
+  tap_mark 'Country'
+  i=0
+  while (i < 80)
+    if element_exists("* text:'#{$Configuration["UserCountry"]}'")
+      tap_mark "#{$Configuration["UserCountry"]}"
+      break
+    else
+      scroll("UITableViewCellScrollView", :down)
+    end
+    i+=1
+  end
+  tap_mark 'Save'
+  sleep 5
+end
 end
 
 Then(/^Session ([\w\d]+). Enter Card details$/) do |session|
+  if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   sleep 3
   tap_mark $id_config["info_cardetails"]
@@ -190,11 +322,76 @@ Then(/^Session ([\w\d]+). Enter Card details$/) do |session|
   sleep 3
   tap_mark 'Save'
   sleep 10
+else
+  ###iOS Code for Card Payment ###
+  ios_connect(session)
+  begin
+  tap_mark "OK"
+  rescue
+  end
+  sleep 3
+  tap_mark 'My payment card'
+  sleep 3
+  clear_text("textField")
+  tap_mark "Card type"
+  tap_mark "#{$Configuration["CardType"]}"
+  sleep 2
+  tap_mark "Card number"
+  keyboard_enter_text "#{$Configuration["CardNumber"]}"
+  tap_mark "Cardholder name"
+  keyboard_enter_text "#{$Configuration["CardholderName"]}"
+  scroll("*", :down)
+  sleep 3
+  tap_mark "End date"
+  a="#{$Configuration["CardEndDate"]}"
+  a_year_int=a.split[1].to_i
+  a_month_int=a.split[0].to_i
+  curr_year=Time.now.year
+  curr_month=Time.now.month
+  i=0
+  while (i<20)
+  if element_exists("* text:'"+a_year_int.to_s+"'")
+    tap_mark a_year_int.to_s
+    break
+  else
+    tap_mark curr_year.to_s
+    curr_year+=1
+    i+=1
+  end
+end
+  j=0
+  while (j<20)
+  if element_exists("* text:'"+"0"+a_month_int.to_s+"'") && a_month_int < 10
+    tap_mark "0"+a_month_int.to_s
+    break
+  elsif element_exists("* text:'"+a_month_int.to_s+"'")
+      tap_mark a_month_int.to_s
+  else
+    if curr_month < 10
+    tap_mark "0"+curr_month.to_s
+    else
+    tap_mark curr_month.to_s
+    end
+    if curr_month == 12
+      curr_month=11
+    elsif curr_month == 0
+      curr_month=1  
+    else
+    curr_month-=1
+    end
+    j+=1
+  end
+end
+  sleep 3
+  tap_mark 'Save'
+  sleep 10
+end
 end
 
 
 ## Then Session S1. Book Accessible room for 2 adults
 Then(/^Session ([\w\d]+). Book ([\w]+) room for ([\w\d &]+)$/) do |session,roomType,guest|
+if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
     sleep 3
     if roomType == "Standard"
@@ -209,20 +406,47 @@ Then(/^Session ([\w\d]+). Book ([\w]+) room for ([\w\d &]+)$/) do |session,roomT
       tap_mark $id_config["two_adults"]
     else
       tap_mark $id_config["adult_and_child"] 
-    end          
+    end
+    else
+    ##IOS Code starts
+    ios_connect(session)
+    sleep 3
+    if roomType == "Standard"
+        tap_mark "Standard"
+        else
+        tap_mark "Accessible"
+    end
+    
+    if guest == "1 adult"
+        tap_mark "1 adult"
+        elsif guest == "2 adults"
+        tap_mark "2 adults"
+        else
+        tap_mark '1 adult &  1 child'
+    end
+    end
 end
 
 ##Then Session S1. Display Hub Flex Price and Hub Saver priced
 Then(/^Session ([\w\d]+). I should see Hub Flex Price and Hub Saver price$/) do |session|
+if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
     sleep 20  
     puts "Hub Flex Price: " + query("* id:'"+$id_config["price_rate"]+"'", :text)[0].to_s
     puts "Hub Saver Price: " + query("* id:'"+$id_config["price_rate"]+"'", :text)[1].to_s
+    else
+    ##IOS Code starts
+    ios_connect(session)
+    sleep 5
+    puts "Hub Flex Price: " + query('label', :text)[8].to_s
+    puts "Hub Saver Price: " + query('label', :text)[12].to_s
+    end
 end
 
 
 ##And Session S1. Enter second guest details
 Then(/^Session ([\w\d]+). Enter second guest details$/) do |session|
+if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   sleep 3
   i=0
@@ -250,11 +474,32 @@ Then(/^Session ([\w\d]+). Enter second guest details$/) do |session|
   query("* id:'"+$id_config["second_guest_firstname"]+"'", {:setText => "#{$Configuration["SecondGuestName"]}"})
   query("* id:'"+$id_config["second_guest_lastname"]+"'", {:setText => ""})
   query("* id:'"+$id_config["second_guest_lastname"]+"'", {:setText => "#{$Configuration["SecondGuestlastname"]}"})
+  else
+  ##IOS Code starts
+  ios_connect(session)
+  sleep 3
+  scroll("*",:down)
+  sleep 3
+  tap_mark 'Title'
+  sleep 2
+  tap_mark "#{$Configuration["SecondGuestTitle"]}"
+  tap_mark 'Done'
+  sleep 2
+  touch(query("* text:'First name'")[1])
+  wait_for_keyboard
+  keyboard_enter_text "#{$Configuration["SecondGuestName"]}"
+  tap_mark 'Done'
+  touch(query("* text:'Last name'")[1])
+  wait_for_keyboard
+  keyboard_enter_text "#{$Configuration["SecondGuestlastname"]}"
+  tap_mark 'Done'
+end
 end
 
 
 ##And Session S1. Select Nationality as United Kingdom
 Then(/^Session ([\w\d]+). Select Nationality ([\w ]+)$/) do |session, nationality|
+if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   sleep 3
   tap_mark $id_config["mainguest_nationality"]
@@ -269,11 +514,23 @@ Then(/^Session ([\w\d]+). Select Nationality ([\w ]+)$/) do |session, nationalit
     end
     i+=1
   end
+  else
+  ##IOS Code starts
+  ios_connect(session)
+  sleep 3
+  tap_mark 'Nationality'
+  while element_does_not_exist("* text:'#{$Configuration["UserCountry"]}'")
+     scroll("UITableViewCellScrollView", :down)
+  end
+  touch(("* text:'#{$Configuration["UserCountry"]}'"))
+  tap_mark 'Done'
+  end
 end
 
 ##And Session S1. Add charity Fund as £1.00
 Then(/^Session ([\w\d]+). Add charity Fund$/) do |session|
-  set_default_device($session[session])
+ if $Configuration[session+"DeviceType"] == "Android"
+ set_default_device($session[session])
   sleep 3
   tap_mark "#{$id_config["charity_fund"]}"
   begin
@@ -283,6 +540,20 @@ Then(/^Session ([\w\d]+). Add charity Fund$/) do |session|
   begin
   $saver_price+=1.0
   rescue
+  end
+  else
+  ##IOS Code starts
+  ios_connect(session)
+  sleep 3
+  tap_mark "£1.00"
+  begin
+      $flexi_price+=1.0
+      rescue
+  end
+  begin
+      $saver_price+=1.0
+      rescue
+  end
   end
 end
 
@@ -302,6 +573,7 @@ end
 
 ##And Session S1. I select Terms and Conditions
 Then(/^Session ([\w\d]+). I select Terms and Conditions$/) do |session|
+if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   sleep 3
   scroll_down
@@ -309,20 +581,41 @@ Then(/^Session ([\w\d]+). I select Terms and Conditions$/) do |session|
   tap_mark "#{$id_config["check_termsconditions"]}"
   scroll_up
   scroll_up
+  else
+  ##IOS Code starts
+  ios_connect(session)
+  sleep 3
+  scroll("*", :down)
+  sleep 3
+  tap_mark "icon_tickbox_unticked"
+  scroll("*", :up)
+  end
 end
+
 
 ##And Session S1. I fill Security code
 Then(/^Session ([\w\d]+). I fill Security code$/) do |session|
+if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   sleep 3
   tap_mark "#{$id_config["sec_code"]}"
   system("#{default_device.adb_command} shell input text #{$Configuration["SecurityCode"]}")
   system("#{default_device.adb_command} shell input keyevent KEYCODE_BACK")
+  else
+  ##IOS Code starts
+  ios_connect(session)
+  sleep 3
+  tap_mark 'Security code'
+  wait_for_keyboard
+  keyboard_enter_text "#{$Configuration["SecurityCode"]}"
+  tap_mark 'Done'
+  end
 end
 
-##And Session S1. Save Breakfast price
+##And Session S1. Save Breakfast price 
 Then(/^Session ([\w\d]+). Save ([\d]+) days Breakfast price for ([\d]+) persons$/) do |session,days,num|
-  set_default_device($session[session])
+ if $Configuration[session+"DeviceType"] == "Android"
+ set_default_device($session[session])
   sleep 3
   price_val=query("* id:'txt_price'", :text)[0].gsub(/\£/,'')
   act_breakfast_price=price_val.gsub(/ per person, per day/,'').to_f
@@ -336,11 +629,33 @@ Then(/^Session ([\w\d]+). Save ([\d]+) days Breakfast price for ([\d]+) persons$
   $saver_price=$saver_price+act_breakfast_price
   puts "Price with Breakfast: "+$saver_price.to_s
   rescue
+  end 
+  else
+  ##IOS Code starts
+  ios_connect(session)
+  sleep 3
+  scroll("*", :up)
+  scroll("*", :up)
+  sleep 5
+  price_val=query("MCSubheaderLabel", :text)[0].gsub(/\£/,'')
+  act_breakfast_price=price_val.gsub(/ per person, per day/,'').to_f
+  act_breakfast_price=act_breakfast_price*num.to_f*days.to_f
+  begin
+      $flexi_price=$flexi_price+act_breakfast_price
+      puts "Price with Breakfast: "+$flexi_price.to_s
+      rescue
   end
+  begin
+      $saver_price=$saver_price+act_breakfast_price
+      puts "Price with Breakfast: "+$saver_price.to_s
+      rescue
+  end
+ end  
 end
 
 ##And Session S1. Verify complete flexi price
 Then(/^Session ([\w\d]+). Verify complete ([\w ]+)$/) do |session,pricetype|
+ if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   sleep 20
   /scroll_down/
@@ -362,10 +677,35 @@ Then(/^Session ([\w\d]+). Verify complete ([\w ]+)$/) do |session,pricetype|
       fail("Calculated price:" + $saver_price.to_s)
     end
   end
+  else
+  ##IOS code starts
+  ios_connect(session)
+  sleep 20
+  #scroll("*", :down)
+  a=query("webView css:'*'")[22]["textContent"]
+  k=a.split("Amount:")
+  disp_price=k[1].to_f
+  if pricetype == "flexi price"
+      if disp_price == $flexi_price
+          puts "Pass"
+          else
+          fail("Disp price:" + disp_price.to_s)
+          fail("Calculated price:" + $flexi_price.to_s)
+      end
+      else
+      if disp_price == $saver_price
+          puts "Pass"
+          else
+          fail("Disp price:" + disp_price.to_s)
+          fail("Calculated price:" + $saver_price.to_s)
+      end
+  end
+  end
 end
 
 ##Then Session S1. I should be able to see Booking confirmed screen
 Then(/^Session ([\w\d]+). I should be able to see Booking confirmed screen$/) do |session|
+if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   sleep 3
   var=query("* id:'#{$id_config["ref_code"]}'", :text)[0]
@@ -374,6 +714,16 @@ Then(/^Session ([\w\d]+). I should be able to see Booking confirmed screen$/) do
   puts "Booking dates: "+var
   var=query("* id:'#{$id_config["email_code"]}'", :text)[0]
   puts "Email sent to: "+var
+  else
+  ios_connect(session)
+  sleep 10
+  var=query("UILabel", :text)[6]
+  puts var
+  var=query("UILabel", :text)[8].to_s.split("\n")[0]
+  puts "Booking status --- "+var
+  var=query("UIButtonLabel", :text)[1]
+  puts "Email sent to: "+var
+  end
 end
 
 ##Given Session S1. Enter Passport details
@@ -391,4 +741,35 @@ Then(/^Session ([\w\d]+). Enter Passport details$/) do |session|
   query("* id:'"+$id_config["passport_location"]+"'", {:setText => "#{$Configuration["PassportIssuePlace"]}"})
   query("* id:'"+$id_config["passport_nextdest"]+"'", {:setText => ""})
   query("* id:'"+$id_config["passport_nextdest"]+"'", {:setText => "#{$Configuration["PassportNextdestination"]}"})
+end
+
+
+##And Session S1. Enable purchases on account
+Then(/^Session ([\w\d]+). Enable purchases on account$/) do |session|
+    if $Configuration[session+"DeviceType"] == "Android"
+        set_default_device($session[session])
+        else
+        ios_connect(session)
+        sleep 3
+        touch("UISwitch")
+        end
+end
+
+##And Session S1. Enter Business Account Email and Password
+Then(/^Session ([\w\d]+). Enter Business Account Email and Password$/) do |session|
+    if $Configuration[session+"DeviceType"] == "Android"
+        set_default_device($session[session])
+        else
+        ios_connect(session)
+        sleep 3
+        tap_mark "Username"
+        wait_for_keyboard
+        keyboard_enter_text "#{$Configuration["BusinessEmail"]}"
+        tap_mark 'Done'
+        sleep 2
+        tap_mark "Password"
+        wait_for_keyboard
+        keyboard_enter_text "#{$Configuration["BusinessPassword"]}"
+        tap_mark 'Done'
+        end
 end

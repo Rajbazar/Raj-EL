@@ -7,7 +7,7 @@ rescue
 end
 end
 puts "\n\nKindly enable debug button manually when app is launched(you have 30secs). \n\nThanks! \n\n\n"
-sleep 10
+#sleep 10
 Before do ('@HUB-01')
   ios_connect("S1")
   start_test_server_in_background

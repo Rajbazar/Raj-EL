@@ -2,7 +2,7 @@ Feature: Booking Feature
    As a HUB app user
    I want to book a room
 
-@Android @HUB-21
+@Android @HUB-21 
 Scenario: Booking the room as a new HUB user
   Then Session S1. Clear data
   Given Session S1. Enter user details
@@ -10,8 +10,8 @@ Scenario: Booking the room as a new HUB user
   Given Session S1. I am on HUB home page
   And I wait for 5 seconds
   Given Session S1. I tap on ChechAvailability
-  Then Session S1. Select ArrivingDate as 29,April,2015
-  Then Session S1. Select LeavingDate as 30,April,2015
+  Then Session S1. Select ArrivingDate as 16,March,2015
+  Then Session S1. Select LeavingDate as 17,March,2015
   Then Session S1. Book Accessible room for 2 adults
   Then Session S1. I tap on Search
   Then Session S1. I should see Hub Flex Price and Hub Saver price
@@ -35,13 +35,15 @@ Scenario: Booking the room as a new HUB user
   Then Session S1. I should be able to see Booking confirmed screen
   Then Session S1. I tap on Done
 
+  
+
 @Android @HUB-22
 Scenario: Booking the room as an a Existing HUB user for 1 Adult only
   Given Session S1. I am on HUB home page
   And I wait for 5 seconds
   Given Session S1. I tap on ChechAvailability
-  Then Session S1. Select ArrivingDate as 28,April,2015
-  Then Session S1. Select LeavingDate as 30,April,2015
+  Then Session S1. Select ArrivingDate as 17,January,2015
+  Then Session S1. Select LeavingDate as 18,January,2015
   Then Session S1. Book Accessible room for 1 adult
   Then Session S1. I tap on Search
   Then Session S1. I should see Hub Flex Price and Hub Saver price
@@ -52,7 +54,7 @@ Scenario: Booking the room as an a Existing HUB user for 1 Adult only
   And Session S1. Scroll down
   And Session S1. Scroll down
   And Session S1. I tap on Breakfast for all
-  And Session S1. Save 2 days Breakfast price for 1 persons
+  And Session S1. Save 1 days Breakfast price for 1 persons
   And Session S1. I tap on Next
   And Session S1. Add charity Fund
   And Session S1. I select Terms and Conditions
@@ -158,7 +160,37 @@ Scenario: Booking with Window less room as an a Existing HUB user
     Then Session S1. I should be able to see Booking confirmed screen
     Then Session S1. I tap on Done
 
-
+@IOS @HUB-26
+Scenario: Booking the room as a new HUB Business account user
+  Then Session S1. Clear data
+  Given Session S1. Enter user details
+  Given Session S1. Enter Card details
+  Given Session S1. I am on HUB home page
+  And I wait for 5 seconds
+  Given Session S1. I tap on ChechAvailability
+  Then Session S1. Select ArrivingDate as 16,March,2015
+  Then Session S1. Select LeavingDate as 17,March,2015
+  Then Session S1. Book Accessible room for 1 adult
+  Then Session S1. I tap on Search
+  Then Session S1. I should see Hub Flex Price and Hub Saver price
+  Then Session S1. Book now for Hub flex Price
+  And Session S1. I tap on Next
+  And Session S1. Select Nationality United Kingdom
+  And Session S1. I tap on Next
+  And Session S1. Scroll down
+  And Session S1. Scroll down
+  And Session S1. Save 1 days Breakfast price for 1 persons
+  And Session S1. I tap on Next
+  And Session S1. Add charity Fund
+  Then Session S1. I tap on Work
+  And Session S1. Scroll down
+  And Session S1. Enable purchases on account
+  And Session S1. Scroll down
+  And Session S1. Enter Business Account Email and Password
+  And Session S1. I select Terms and Conditions
+  Then Session S1. I tap on Finish
+  Then Session S1. I should be able to see Booking confirmed screen
+  Then Session S1. I tap on Done
 
 
 

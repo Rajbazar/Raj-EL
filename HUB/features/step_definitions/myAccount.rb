@@ -1,9 +1,25 @@
 
 
 Then(/^Session ([\w\d]+). Clear data$/) do |session|
+  if $Configuration[session+"DeviceType"] == "Android"
   set_default_device($session[session])
   clear_app_data
   start_test_server_in_background
+else
+  ###IOS code starts
+  ios_connect(session)
+  sleep 3
+  tap_mark 'icon_navbar_menu'
+  tap_mark 'my account'
+  begin
+  scroll("*", :down)
+  sleep 5
+  tap_mark 'Log out'
+  sleep 2
+  touch(query("UILabel text:'Logout'")[1])
+rescue
+end
+end
 end
 
 ##Then Session S1. Display user Name
