@@ -4,7 +4,7 @@ Feature: MyStay Feature
   So that I can able control my room
 
 @Android @HUB-401
- Scenario: As an a HUB user, I would like to navigate from my Stay to control Lightings
+ Scenario: As a HUB user, I would like to navigate from my Stay to control Lightings
 
     Then Session S1. Clear data
     Given Session S1. I am on HUB home page
@@ -31,7 +31,7 @@ Feature: MyStay Feature
      Then Session S1. I tap on lightCloseButton
 
 @Android @HUB-402
- Scenario: As an a HUB user, I would like to navigate from my Stay to control Reading Bulbs
+ Scenario: As a HUB user, I would like to navigate from my Stay to control Reading Bulbs/Lighting section 
 
      Then Session S1. Clear data
      Given Session S1. I am on HUB home page
@@ -103,7 +103,7 @@ Feature: MyStay Feature
     And Session S1. Select full Fan button
     Then Session S1. I tap on tempCloseButton
 
-  @Android @HUB-406
+  @Android @HUB-405
   Scenario: Display Room-Connect code
 
     Given Session S1. I am on HUB home page
@@ -113,7 +113,7 @@ Feature: MyStay Feature
     Then Session S1. Display room connect code
 
 
-  @Android @HUB-407
+  @Android @HUB-406
   Scenario: As an a HUB user, I would like to control the TV channels
 
     Then Session S1. Clear data
@@ -144,7 +144,7 @@ Feature: MyStay Feature
 
 
 
-  @Android @HUB-408
+  @Android @HUB-407
   Scenario: As an a HUB user, I would like to control the TV volumes
 
     Then Session S1. Clear data
@@ -172,7 +172,7 @@ Feature: MyStay Feature
     When Session S1. I decrease the TV volume
     Then Session S1. I tap on tvCloseButton
 
-  @Android @HUB-409
+  @Android @HUB-408
   Scenario: As an a HUB user, I would like to control the TV channels
 
     Then Session S1. Clear data

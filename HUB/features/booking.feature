@@ -2,7 +2,7 @@ Feature: Booking Feature
    As a HUB app user
    I want to book a room
 
-@Android @HUB-21 
+@iOS @Android @HUB-21 
 Scenario: Booking the room as a new HUB user
   Then Session S1. Clear data
   Given Session S1. Enter user details
@@ -37,7 +37,7 @@ Scenario: Booking the room as a new HUB user
 
   
 
-@Android @HUB-22
+ @iOS @Android @HUB-22
 Scenario: Booking the room as an a Existing HUB user for 1 Adult only
   Given Session S1. I am on HUB home page
   And I wait for 5 seconds
@@ -68,7 +68,7 @@ Scenario: Booking the room as an a Existing HUB user for 1 Adult only
 
 
 
-@Android @HUB-23
+@iOS @Android @HUB-23
   Scenario: Booking the room with Saver Price for 1 adult and 1 child
     Given Session S1. I am on HUB home page
     And I wait for 5 seconds
@@ -98,7 +98,7 @@ Scenario: Booking the room as an a Existing HUB user for 1 Adult only
     Then Session S1. I tap on Done
 
 
-@Android @HUB-24
+@iOS @Android @HUB-24
 Scenario: Booking with Window less room as an a Existing HUB user
   Given Session S1. I am on HUB home page
   And I wait for 5 seconds
@@ -129,7 +129,7 @@ Scenario: Booking with Window less room as an a Existing HUB user
   Then Session S1. I should be able to see Booking confirmed screen
   Then Session S1. I tap on Done
 
-@Android @HUB-25
+@iOS @Android @HUB-25
   Scenario: Booking for different nationality then UK
     Given Session S1. I am on HUB home page
     And I wait for 5 seconds
@@ -160,7 +160,7 @@ Scenario: Booking with Window less room as an a Existing HUB user
     Then Session S1. I should be able to see Booking confirmed screen
     Then Session S1. I tap on Done
 
-@IOS @HUB-26
+@IOS @Android @HUB-26
 Scenario: Booking the room as a new HUB Business account user
   Then Session S1. Clear data
   Given Session S1. Enter user details

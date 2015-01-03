@@ -1,4 +1,7 @@
 Feature: My Account
+  As a HUB app user
+  I want to navigate to My account
+  So that I can able to add my details and guest details
 
 @Android @HUB-301
   Scenario: Enter Account Information
@@ -6,7 +9,7 @@ Feature: My Account
     Given Session S1. Enter user details
     Given Session S1. Enter Card details
 
-@Android @HUB-302
+@iOS @Android @HUB-302
   Scenario: Display Account Information
     Given Session S1. I tap on LeftMenu
     Then Session S1. I tap on myAccount

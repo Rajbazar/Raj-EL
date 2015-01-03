@@ -126,6 +126,14 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&]+)$/) do |session,ops|
     elsif ops == "tempCloseButton"
     elsif ops == "SendFeedback"
     elsif ops == "tvCloseButton"
+    elsif ops == "plusSign"
+        touch(query("view")[12])
+        sleep 2
+    elsif ops == "Breakfast for all"
+        scroll("*", :up)
+        scroll("*", :up)
+        sleep 3
+        tap_mark "Breakfast for all"
     else
       tap_mark "#{ops.to_s}"
     end

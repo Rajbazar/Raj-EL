@@ -12,6 +12,7 @@ ENV['DEVICE']="device"
     ENV["APP_BUNDLE_PATH"]=$Configuration["iOSAppPath"]
   end
 else
+  ###Android Code Starts####
 require 'calabash-android/management/app_installation'
 require 'calabash-android/management/adb'
 require 'calabash-android/operations'

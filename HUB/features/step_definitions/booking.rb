@@ -334,6 +334,10 @@ else
   sleep 3
   clear_text("textField")
   tap_mark "Card type"
+  ##Only to be used for Amex Cards
+  /while element_does_not_exist("* text:'#{$Configuration["CardType"]}'")
+      scroll("UIPickerTableView", :down)
+  end/
   tap_mark "#{$Configuration["CardType"]}"
   sleep 2
   tap_mark "Card number"
@@ -773,3 +777,64 @@ Then(/^Session ([\w\d]+). Enter Business Account Email and Password$/) do |sessi
         tap_mark 'Done'
         end
 end
+
+##Then Session S1. Add Title as Mr
+Then(/^Session ([\w\d]+). Add ([\w]+) as ([\w ]+)$/) do |session,ops,text|
+    if $Configuration[session+"DeviceType"] == "Android"
+        set_default_device($session[session])
+        else
+        ios_connect(session)
+        if ops == "Title"
+            tap_mark 'Title'
+            sleep 2
+            tap_mark text.to_s
+            sleep 2
+         elsif ops == "FirstName"
+            tap_mark 'First name'
+            wait_for_keyboard
+            keyboard_enter_text text.to_s
+            tap_mark 'Done'
+            sleep 2
+         elsif ops == "LastName"
+            tap_mark 'Last name'
+            wait_for_keyboard
+            keyboard_enter_text text.to_s
+            tap_mark 'Done'
+            sleep 2
+         elsif ops == "Nationality"
+         tap_mark 'Nationality'
+         while element_does_not_exist("* {text CONTAINS'#{text.to_s}'}")
+             scroll("UITableViewCellScrollView", :down)
+         end
+         touch("* {text CONTAINS'#{text.to_s}'}")
+         tap_mark 'Done'
+         sleep 2
+     end
+end
+end
+
+##Then Session S1. Cancel the last booking
+Then(/^Session ([\w\d]+). Cancel the last booking$/) do |session|
+    if $Configuration[session+"DeviceType"] == "Android"
+        set_default_device($session[session])
+        else
+        ios_connect(session)
+        sleep 3
+        scroll("*", :down)
+        sleep 2
+        a=query("* text:'London Covent Garden'").count
+        touch(query("* text:'London Covent Garden'")[a-1])
+        sleep 5
+        while element_does_not_exist("* text:'Cancel booking'")
+            scroll("*", :down)
+        end
+        sleep 2
+        touch("* text:'Cancel booking'")
+        sleep 5
+        tap_mark "Password"
+        wait_for_keyboard
+        keyboard_enter_text "#{$Configuration["UserPassword"]}"
+        tap_mark 'Log in'
+    end
+end
+
