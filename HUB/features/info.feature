@@ -4,7 +4,7 @@ Feature:  info Feature
   So that I can able to send the feedback and check for T&C and FAQs
 
 
-@iOS @Android @HUB-05
+@IOS @Android @HUB-05
   Scenario: As a HUB user, I would able to send feedback, to check HUB T&C and FAQs
 
     When Session S1. I tap on LeftMenu

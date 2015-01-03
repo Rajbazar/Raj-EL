@@ -2,7 +2,7 @@ Feature: Booking Feature
    As a HUB app user
    I want to book a room
 
-@iOS @Android @HUB-21 
+@IOS @Android @HUB-21 
 Scenario: Booking the room as a new HUB user
   Then Session S1. Clear data
   Given Session S1. Enter user details
@@ -37,7 +37,7 @@ Scenario: Booking the room as a new HUB user
 
   
 
- @iOS @Android @HUB-22
+ @IOS @Android @HUB-22
 Scenario: Booking the room as an a Existing HUB user for 1 Adult only
   Given Session S1. I am on HUB home page
   And I wait for 5 seconds
@@ -68,7 +68,7 @@ Scenario: Booking the room as an a Existing HUB user for 1 Adult only
 
 
 
-@iOS @Android @HUB-23
+@IOS @Android @HUB-23
   Scenario: Booking the room with Saver Price for 1 adult and 1 child
     Given Session S1. I am on HUB home page
     And I wait for 5 seconds
@@ -98,7 +98,7 @@ Scenario: Booking the room as an a Existing HUB user for 1 Adult only
     Then Session S1. I tap on Done
 
 
-@iOS @Android @HUB-24
+@IOS @Android @HUB-24
 Scenario: Booking with Window less room as an a Existing HUB user
   Given Session S1. I am on HUB home page
   And I wait for 5 seconds
@@ -129,7 +129,7 @@ Scenario: Booking with Window less room as an a Existing HUB user
   Then Session S1. I should be able to see Booking confirmed screen
   Then Session S1. I tap on Done
 
-@iOS @Android @HUB-25
+@IOS @Android @HUB-25
   Scenario: Booking for different nationality then UK
     Given Session S1. I am on HUB home page
     And I wait for 5 seconds
@@ -179,18 +179,25 @@ Scenario: Booking the room as a new HUB Business account user
   And Session S1. I tap on Next
   And Session S1. Scroll down
   And Session S1. Scroll down
+  And Session S1. I tap on Breakfast for all
   And Session S1. Save 1 days Breakfast price for 1 persons
   And Session S1. I tap on Next
   And Session S1. Add charity Fund
-  Then Session S1. I tap on Work
-  And Session S1. Scroll down
   And Session S1. Enable purchases on account
-  And Session S1. Scroll down
+  Then Session S1. I tap on Work
   And Session S1. Enter Business Account Email and Password
   And Session S1. I select Terms and Conditions
   Then Session S1. I tap on Finish
   Then Session S1. I should be able to see Booking confirmed screen
   Then Session S1. I tap on Done
 
-
-
+@IOS @Android @HUB-27
+Scenario: Cancel room booking
+  Given Session S1. I tap on LeftMenu
+  Then Session S1. I tap on myBookings
+  And I wait for 5 seconds
+  Then Session S1. Cancel the last booking
+  And I wait for 2 seconds
+  Then Session S1. I tap on Confirm
+  And I wait for 2 seconds
+  Then Session S1. I tap on Ok

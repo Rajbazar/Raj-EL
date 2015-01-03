@@ -3,13 +3,13 @@ Feature: Navigation Feature
    I want to navigate the app from home screen
    So that I can  see all the functions working as per expected 
 
-@Android @HUB-00
+ @IOS @Android @HUB-00
  Scenario: As a valid app user for HUB
  When I press "Login"
  Then I see "Welcome to coolest app ever"
   
 
-@Android @HUB-01
+ @IOS @Android @HUB-01
 Scenario: Tapping elements throught the App
    Given Session S1. I tap on LeftMenu
     Then Session S1. I tap on myStay
