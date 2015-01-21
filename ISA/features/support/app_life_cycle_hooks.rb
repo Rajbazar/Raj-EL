@@ -2,7 +2,6 @@ if $Configuration["S1DeviceType"] == "IOS" || $Configuration["S2DeviceType"] == 
 Before do ('@ISA-01')
   ios_connect("S1")
   start_test_server_in_background
-  sleep 30
 end
 else
 require 'calabash-android/management/adb'

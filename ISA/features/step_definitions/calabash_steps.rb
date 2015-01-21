@@ -19,6 +19,12 @@ Then(/^Session ([\w\d]+). Display complete-text on landing page$/) do |session|
   else
     sleep 5
     var = query("UILabel", :text)
+    scroll("*", :down)
+    sleep 2
+    scroll("*", :down)
+    sleep 2
+    var=var+query("UILabel", :text)
+    var=var.uniq
     puts var
  end
 end
@@ -37,5 +43,25 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&]+)$/) do |session,ops|
       tap_mark "#{ops.to_s}"
     end
   else
+        sleep 3
+        if ops == "RightMenu"
+        puts "No Right menu for iOS"
+        elsif ops == "Settings"
+        puts "Not implemented for iOS"
+        elsif ops == "Calculator"
+        puts "Not implemented for iOS"
+        elsif ops == "HardBackButton"
+        begin
+        sleep 2
+        tap_mark 'Back'
+        rescue
+        end
+        elsif ops == 'Transfer'
+        sleep 2
+        tap_mark 'Transfer In'
+        else
+        sleep 2
+        tap_mark "#{ops.to_s}"
+    end
     end
 end
