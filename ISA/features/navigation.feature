@@ -21,7 +21,7 @@ Feature: Navigation Feature
      Then Session S1. I tap on Calculator
      Then Session S1. I tap on HardBackButton
   
-@IOS @Android @ISA-01
+@Android @ISA-01
 Scenario: Calculator Sample
   Then Session S1. I tap on RightMenu
   Then Session S1. I tap on Calculator
@@ -31,18 +31,27 @@ Scenario: Calculator Sample
   Then Session S1. Display tax saved
 
 
-@IOS @Android @ISA-02
+@IOS @ISA-02
 Scenario: Learn more aout ISA
-Given I am on Santander ISA Landing page  
- When I tap on FIXED RATE ISAs 
- Then I should able to see the more about lerning ISA 
-  And I should able to see Push-notification
-  And I sgould be able to see Legal information
-  And I should be able to see FAQs
-  And I wait for 10 seconds
- When I tap on menu
- Then I should be able to navigated back to landing screen
-
+ When Session S1. I tap on Fixed rate cash ISAs
+ Then Session S1. Display complete-text on RatePage
+ Then Session S1. I tap on HardBackButton
+ When Session S1. I tap on Variable rate cash ISAs
+ Then Session S1. Display complete-text on RatePage
+ Then Session S1. I tap on HardBackButton
+ Then Session S1. Scroll down
+ When Session S1. I tap on Paying into your cash ISA
+ Then Session S1. Display complete-text on RatePage
+ Then Session S1. I tap on HardBackButton
+ When Session S1. I tap on What are cash ISAs?
+ Then Session S1. Display complete-text on Page
+ Then Session S1. I tap on HardBackButton
+ Then Session S1. Scroll down
+ Then Session S1. Scroll down
+ Then Session S1. Verify Clock from 5th April
+ Then Session S1. Scroll up
+ Then Session S1. Scroll up
+ Then Session S1. Scroll up
 
 @IOS @Android @ISA-03
 Scenario: Know more about product details
