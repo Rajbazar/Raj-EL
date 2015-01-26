@@ -40,6 +40,27 @@ Then(/^Session ([\w\d]+). Display complete-text on ([\w ]+)$/) do |session,pageN
     p_arry(var)
     elsif pageName == "RatePage"
     var = query("UILabel", :text)
+    scroll("*", :down)
+    sleep 2
+    scroll("*", :down)
+    sleep 2
+    var=var+query("UILabel", :text)
+    scroll("*", :down)
+    sleep 2
+    scroll("*", :down)
+    sleep 2
+    var=var+query("UILabel", :text)
+    scroll("*", :down)
+    sleep 2
+    scroll("*", :down)
+    sleep 2
+    var=var+query("UILabel", :text)
+    scroll("*", :down)
+    sleep 2
+    scroll("*", :down)
+    sleep 2
+    var=var+query("UILabel", :text)
+    var=var.uniq
     p_arry(var)
     elsif pageName == "Page"
     var = query("UILabel", :text)
