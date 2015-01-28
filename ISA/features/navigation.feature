@@ -31,7 +31,7 @@ Scenario: Calculator Sample
   Then Session S1. Display tax saved
 
 
-@IOS @ISA-02
+@IOS @Android @ISA-02
 Scenario: Learn more aout ISA
  When Session S1. I tap on Fixed rate cash ISAs
  Then Session S1. Display complete-text on RatePage
@@ -39,7 +39,6 @@ Scenario: Learn more aout ISA
  When Session S1. I tap on Variable rate cash ISAs
  Then Session S1. Display complete-text on RatePage
  Then Session S1. I tap on HardBackButton
- Then Session S1. Scroll down
  When Session S1. I tap on Paying into your cash ISA
  Then Session S1. Display complete-text on RatePage
  Then Session S1. I tap on HardBackButton
@@ -54,16 +53,10 @@ Scenario: Learn more aout ISA
  Then Session S1. Scroll up
 
 @IOS @Android @ISA-03
-Scenario: Know more about product details
- Given I am on Santander ISA Landing page  
- When I tap on VARIABLE RATE ISAs
- Then I should be able to see ISA Product details
-  And I should be able to see Savings calculator
-  And I should be able to see Apply for a new ISA
-  And I should be able to see Upgrade existing ISA
-  And I svould be able to see Terms and conditions
- When I tap on menu
- Then I should be able to navigate back to landing screen
+Scenario: Display Full Product Details
+    When Session S1. I tap on Fixed rate cash ISAs
+    Then Session S1. Click information button
+    Then Session S1. Display complete-text on MoreDetailsPage
 
 
 @IOS @Android @ISA-04

@@ -69,6 +69,25 @@ Then(/^Session ([\w\d]+). Display complete-text on ([\w ]+)$/) do |session,pageN
     elsif pageName == "Page"
     var = android_textgrep()
     p_arry(var)
+    elsif pageName == "MoreDetailsPage"
+    var = android_textgrep()
+    scroll_down
+    sleep 2
+    scroll_down
+    sleep 2
+    var=var+android_textgrep()
+    scroll_down
+    sleep 2
+    scroll_down
+    sleep 2
+    var=var+android_textgrep()
+    scroll_down
+    sleep 2
+    scroll_down
+    sleep 2
+    var=var+android_textgrep()
+    var=var.uniq
+    p_arry(var)
    end
   else
     sleep 5
@@ -112,6 +131,7 @@ Then(/^Session ([\w\d]+). Display complete-text on ([\w ]+)$/) do |session,pageN
     elsif pageName == "Page"
     var = query("UILabel", :text)
      p_arry(var)
+     elsif pageName == "MoreDetailsPage"
     end
  end
 end
@@ -135,6 +155,8 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&?]+)$/) do |session,ops|
         puts "No Right menu for iOS"
         elsif ops == "Settings"
         puts "Not implemented for iOS"
+        elsif ops == "Paying into your cash ISA"
+        scroll('*', down)
         elsif ops == "Calculator"
         puts "Not implemented for iOS"
         elsif ops == "HardBackButton"
@@ -256,4 +278,14 @@ Then(/^Session ([\w\d]+). Verify Clock from 5th April$/) do |session|
                fail("Minutes/Hours not correct")
           end
       end
+end
+
+##Then Session S1. Click information button
+Then(/^Session ([\w\d]+). Click information button$/) do |session|
+        if $Configuration[session+"DeviceType"] == "Android"
+            set_default_device($session[session])
+            sleep 3
+            touch(query('ImageButton')[0])
+         else
+    end
 end
