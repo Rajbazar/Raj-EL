@@ -55,7 +55,7 @@ Scenario: Learn more aout ISA
 @IOS @Android @ISA-03
 Scenario: Display Full Product Details
     When Session S1. I tap on Fixed rate cash ISAs
-    Then Session S1. Click information button
+    Then Session S1. Click Continue to Full Details
     Then Session S1. Display complete-text on MoreDetailsPage
 
 

@@ -86,6 +86,26 @@ Then(/^Session ([\w\d]+). Display complete-text on ([\w ]+)$/) do |session,pageN
     scroll_down
     sleep 2
     var=var+android_textgrep()
+    scroll_down
+    sleep 2
+    scroll_down
+    sleep 2
+    var=var+android_textgrep()
+    scroll_down
+    sleep 2
+    scroll_down
+    sleep 2
+    var=var+android_textgrep()
+    scroll_down
+    sleep 2
+    scroll_down
+    sleep 2
+    var=var+android_textgrep()
+    scroll_down
+    sleep 2
+    scroll_down
+    sleep 2
+    var=var+android_textgrep()
     var=var.uniq
     p_arry(var)
    end
@@ -281,11 +301,12 @@ Then(/^Session ([\w\d]+). Verify Clock from 5th April$/) do |session|
 end
 
 ##Then Session S1. Click information button
-Then(/^Session ([\w\d]+). Click information button$/) do |session|
+Then(/^Session ([\w\d]+). Click Continue to Full Details$/) do |session|
         if $Configuration[session+"DeviceType"] == "Android"
             set_default_device($session[session])
             sleep 3
-            touch(query('ImageButton')[0])
+            scroll_to("* text:'Continue to Full Details'")
+            tap_mark 'Continue to Full Details'
          else
     end
 end
