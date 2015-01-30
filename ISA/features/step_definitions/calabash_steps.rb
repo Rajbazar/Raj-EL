@@ -30,13 +30,33 @@ Then(/^Session ([\w\d]+). Display complete-text on ([\w ]+)$/) do |session,pageN
   set_default_device($session[session])
   sleep 5
   if pageName == "landing page"
-    var=query("*", :text)[7].to_s
-    puts var
-    a=query("* id:'tv_title_product'", :text)
-    scroll_down
-    a=a+query("* id:'tv_title_product'", :text)
-    a=a.uniq
-    puts a
+      var = android_textgrep()
+      scroll_down
+      sleep 2
+      var=var+android_textgrep()
+      scroll_down
+      sleep 2
+      var=var+android_textgrep()
+      scroll_down
+      sleep 2
+      var=var+android_textgrep()
+      scroll_down
+      sleep 2
+      var=var+android_textgrep()
+      scroll_down
+      sleep 2
+      var=var+android_textgrep()
+      scroll_down
+      sleep 2
+      var=var+android_textgrep()
+      scroll_down
+      sleep 2
+      var=var+android_textgrep()
+      scroll_down
+      sleep 2
+      var=var+android_textgrep()
+      var=var.uniq
+      p_arry(var)
     elsif pageName == "RatePage"
     var = android_textgrep()
     scroll_down
