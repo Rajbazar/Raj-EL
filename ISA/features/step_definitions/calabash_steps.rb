@@ -171,7 +171,63 @@ Then(/^Session ([\w\d]+). Display complete-text on ([\w ]+)$/) do |session,pageN
     elsif pageName == "Page"
     var = query("UILabel", :text)
      p_arry(var)
-     elsif pageName == "MoreDetailsPage"
+    elsif pageName == "MoreDetailsPage"
+     var = query("UILabel", :text)
+     scroll("*", :down)
+     sleep 2
+     scroll("*", :down)
+     sleep 2
+     var=var+query("UILabel", :text)
+     scroll("*", :down)
+     sleep 2
+     scroll("*", :down)
+     sleep 2
+     var=var+query("UILabel", :text)
+     scroll("*", :down)
+     sleep 2
+     scroll("*", :down)
+     sleep 2
+     var=var+query("UILabel", :text)
+     scroll("*", :down)
+     sleep 2
+     scroll("*", :down)
+     sleep 2
+     var=var+query("UILabel", :text)
+     var=var.uniq
+     p_arry(var)
+     elsif pageName == "ApplyUpgradeScreen"
+     var = query("UILabel", :text)
+     scroll("*", :down)
+     sleep 2
+     scroll("*", :down)
+     sleep 2
+     var=var+query("UILabel", :text)
+     var=var.uniq
+     p_arry(var)
+     elsif pageName == "Screen"
+     var = query("UILabel", :text)
+     scroll("*", :down)
+     sleep 2
+     scroll("*", :down)
+     sleep 2
+     var=var+query("UILabel", :text)
+     scroll("*", :down)
+     sleep 2
+     scroll("*", :down)
+     sleep 2
+     var=var+query("UILabel", :text)
+     scroll("*", :down)
+     sleep 2
+     scroll("*", :down)
+     sleep 2
+     var=var+query("UILabel", :text)
+     scroll("*", :down)
+     sleep 2
+     scroll("*", :down)
+     sleep 2
+     var=var+query("UILabel", :text)
+     var=var.uniq
+     p_arry(var)
     end
  end
 end
@@ -196,7 +252,9 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&?]+)$/) do |session,ops|
         elsif ops == "Settings"
         puts "Not implemented for iOS"
         elsif ops == "Paying into your cash ISA"
-        scroll('*', down)
+        scroll('*', :down)
+        sleep 2
+        tap_mark "Paying into your cash ISA"
         elsif ops == "Calculator"
         puts "Not implemented for iOS"
         elsif ops == "HardBackButton"
@@ -321,12 +379,28 @@ Then(/^Session ([\w\d]+). Verify Clock from 5th April$/) do |session|
 end
 
 ##Then Session S1. Click information button
-Then(/^Session ([\w\d]+). Click Continue to Full Details$/) do |session|
+Then(/^Session ([\w\d]+). Click ([\w ,'&?]+)$/) do |session,ops|
         if $Configuration[session+"DeviceType"] == "Android"
             set_default_device($session[session])
             sleep 3
-            scroll_to("* text:'Continue to Full Details'")
-            tap_mark 'Continue to Full Details'
+            scroll_to("* text:'#{ops}'")
+            tap_mark "#{ops.to_s}"
          else
+            sleep 3
+            if ops == "iButton"
+                touch(query("UIButton")[4])
+            else
+            i=0
+            while(i<20)
+                if element_exists("* text:'#{ops}'")
+                    tap_mark "#{ops.to_s}"
+                break
+                else
+                    scroll("*", :down)
+                    sleep 2
+                i+=1
+               end
+            end
+            end
     end
 end

@@ -58,8 +58,21 @@ Scenario: Display Full Product Details
     Then Session S1. Click Continue to Full Details
     Then Session S1. Display complete-text on MoreDetailsPage
 
+@IOS @ISA-04
+Scenario: Display Text on Apply/Upgrade Screen
+When Session S1. I tap on Fixed rate cash ISAs
+Then Session S1. Click Apply
+Then Session S1. Display complete-text on ApplyUpgradeScreen
 
-@IOS @Android @ISA-04
+
+@IOS @ISA-05
+Scenario: Display Text on Apply/Upgrade Screen
+When Session S1. I tap on Fixed rate cash ISAs
+Then Session S1. Click iButton
+Then Session S1. Display complete-text on Screen
+
+
+@IOS @Android @ISA-06
 Scenario: Navigate to Santander webview 
  Given I am on Santander ISA Landing page  
   When I tap on Fund your ISA
