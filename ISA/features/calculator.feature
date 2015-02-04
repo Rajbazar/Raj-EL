@@ -4,6 +4,26 @@ As a mobile app user
 So that I can deposit minimum to maximun ammount
 
 
+@Android @ISA-00
+Scenario: Calculator Sample
+  Then Session S1. I tap on RightMenu
+  Then Session S1. I tap on Calculator
+  Then Session S1. Select investment amount
+  Then Session S1. Display Interest rate
+  Then Session S1. Display Interest earned
+  Then Session S1. Display tax saved
+
+
+@Android @ISA-20
+Scenario: Calculator Sample
+  Then Session S1. I tap on RightMenu
+  Then Session S1. I tap on Calculator
+  Then Session S1. Select investment amount
+  Then Session S1. Display Interest rate
+  Then Session S1. Display Interest earned
+  Then Session S1. Display tax saved
+
+
 @IOS @Android @ISA-21
 Scenario: Interest for Max deposit value
 Given I am on the landing page
