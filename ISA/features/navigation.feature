@@ -3,28 +3,22 @@ Feature: Navigation Feature
    I want to navigate the app from Landing page
    So that I can  see all the functions working as per expected 
 
-@IOS @Android @ISA-00
+@Android @ISA-00
  Scenario: Navigate complete app
      Then Session S1. Display complete-text on landing page
      Then Session S1. I tap on RightMenu
-     Then Session S1. I tap on Settings
-     Then Session S1. I tap on RightMenu
-     Then Session S1. I tap on Apply
+     Then Session S1. I tap on Legal Information
+     Then Session S1. Display complete-text on Screen
      Then Session S1. I tap on HardBackButton
-     Then Session S1. I tap on RightMenu
-     Then Session S1. I tap on Upgrade
+     Then Session S1. I tap on Contact Us
+     Then Session S1. Display complete-text on Screen
      Then Session S1. I tap on HardBackButton
-     Then Session S1. I tap on RightMenu
-     Then Session S1. I tap on Transfer
-     Then Session S1. I tap on HardBackButton
-     Then Session S1. I tap on RightMenu
-     Then Session S1. I tap on Calculator
      Then Session S1. I tap on HardBackButton
   
 @Android @ISA-01
 Scenario: Calculator Sample
-  Then Session S1. I tap on RightMenu
-  Then Session S1. I tap on Calculator
+  When Session S1. I tap on Fixed rate cash ISAs
+  Then Session S1. Click Calculate my interest
   Then Session S1. Select investment amount
   Then Session S1. Display Interest rate
   Then Session S1. Display Interest earned
@@ -65,7 +59,7 @@ Then Session S1. Click Apply
 Then Session S1. Display complete-text on ApplyUpgradeScreen
 
 
-@IOS @ISA-05
+@IOS @Android @ISA-05
 Scenario: Display Text on Apply/Upgrade Screen
 When Session S1. I tap on Fixed rate cash ISAs
 Then Session S1. Click iButton
