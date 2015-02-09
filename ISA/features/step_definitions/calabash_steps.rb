@@ -128,49 +128,6 @@ Then(/^Session ([\w\d]+). Display complete-text on ([\w ]+)$/) do |session,pageN
     var=var+android_textgrep()
     var=var.uniq
     p_arry(var)
-    elsif pageName == "Screen"
-    var = android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    scroll_down
-    sleep 2
-    var=var+android_textgrep()
-    var=var.uniq
-    p_arry(var)
    end
   else
     sleep 5
@@ -340,11 +297,20 @@ Then(/^Session ([\w\d]+). Verify Clock from 5th April$/) do |session|
           set_default_device($session[session])
           sleep 3
                                     ##countdown_type_toggle_button  ##countdown_timer_textview ##countdown_timer_type_textview
-                                    days=query("* id:'text_view_day'", :text)[0].to_i
+                                    if query("* id:'countdown_timer_type_textview'", :text)[0] == "Days"
+                                    days=query("* id:'countdown_timer_textview'", :text)[0].to_i
+                                    tap_mark "countdown_type_toggle_button"
+                                    end
                                     sleep 3
-                                    hours=query("* id:'text_view_hour'", :text)[0].to_i
+                                    if query("* id:'countdown_timer_type_textview'", :text)[0] == "Hours"
+                                    hours=query("* id:'countdown_timer_textview'", :text)[0].to_i
+                                    tap_mark "countdown_type_toggle_button"
+                                    end
                                     sleep 3
-                                    mins=query("* id:'text_view_minute'", :text)[0].to_i
+                                    if query("* id:'countdown_timer_type_textview'", :text)[0] == "Minutes"
+                                    mins=query("* id:'countdown_timer_textview'", :text)[0].to_i
+                                    tap_mark "countdown_type_toggle_button"
+                                    end
                                     a=Time.now
                                     start_date = Date.parse "2015-04-05"
                                     end_date = Date.parse a.to_s
@@ -355,12 +321,13 @@ Then(/^Session ([\w\d]+). Verify Clock from 5th April$/) do |session|
                                     else
                                     fail("Days not correct")
                                     end
-                                    start_mins = Time.now.utc.min
-                                    act_mins = 60 - start_mins.to_i
-                                    act_hours = 24-Time.now.utc.hour
-                                    puts "Minutes should be: " + mins.to_s
-                                    puts "Hours should be: " + hours.to_s
-                                    if (mins == act_mins || mins == act_mins-1)  && (hours == act_hours || hours == act_hours -1)
+                                    start_mins = Time.parse "2015-04-06"
+                                    end_mins = Time.parse a.to_s
+                                    act_mins = ((start_mins - end_mins)/60).to_i
+                                    act_hours = (act_mins/60).to_i
+                                    puts "Minutes should be: " + act_mins.to_s
+                                    puts "Hours should be: " + act_hours.to_s
+                                    if mins == act_mins && hours == act_hours
                                     puts "Pass"
                                     
                                     else
@@ -416,12 +383,8 @@ Then(/^Session ([\w\d]+). Click ([\w ,'&?]+)$/) do |session,ops|
         if $Configuration[session+"DeviceType"] == "Android"
             set_default_device($session[session])
             sleep 3
-            if ops == "iButton"
-                touch(query("ImageButton")[0])
-            else
             scroll_to("* text:'#{ops}'")
             tap_mark "#{ops.to_s}"
-            end
          else
             sleep 3
             if ops == "iButton"
