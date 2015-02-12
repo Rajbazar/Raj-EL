@@ -33,6 +33,7 @@ Scenario: Learn more aout ISA
  When Session S1. I tap on Variable rate cash ISAs
  Then Session S1. Display complete-text on RatePage
  Then Session S1. I tap on HardBackButton
+ Then Session S1. Scroll down
  When Session S1. I tap on Paying into your cash ISA
  Then Session S1. Display complete-text on RatePage
  Then Session S1. I tap on HardBackButton

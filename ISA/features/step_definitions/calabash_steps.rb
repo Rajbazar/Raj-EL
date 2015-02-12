@@ -291,13 +291,13 @@ Then(/^Session ([\w\d]+). I tap on ([\w ,'&?]+)$/) do |session,ops|
   else
         sleep 3
         if ops == "RightMenu"
-        puts "No Right menu for iOS"
+        touch(query("UIButton")[0])
         elsif ops == "Settings"
         puts "Not implemented for iOS"
-        elsif ops == "Paying into your cash ISA"
+        /elsif ops == "Paying into your cash ISA"
         scroll('*', :down)
         sleep 2
-        tap_mark "Paying into your cash ISA"
+        tap_mark "Paying into your cash ISA"/
         elsif ops == "Calculator"
         puts "Not implemented for iOS"
         elsif ops == "HardBackButton"
@@ -371,44 +371,53 @@ Then(/^Session ([\w\d]+). Verify Clock from 5th April$/) do |session|
           arr=query('UILabel',:text)
           i=0
           while i<arr.length
-             if arr[i] == "Countdown Clock"
-                days=query('UILabel',:text)[i+1].to_s
-                tap_mark "timer icon iOS"
+             if arr[i] == "The 2014/15 tax year ends soon"
+                days=query('UILabel',:text)[i+4].to_s
                 sleep 3
                 hours=query('UILabel',:text)[i+1].to_s
-                tap_mark "timer icon iOS"
                 sleep 3
-                mins=query('UILabel',:text)[i+1].to_s
-                days=days.gsub(/\nDays/,"").to_i
-                hours=hours.gsub(/Hours/,"").to_i
-                mins=mins.gsub(/Minutes/,"").to_i
+                mins=query('UILabel',:text)[i+2].to_s
+                days=days.gsub(/\nDAYS/,"").to_i
+                hours=hours.gsub(/\nHOURS/,"").to_i
+                mins=mins.gsub(/MINUTES/,"").to_i
                 break
             end
           i+=1
           end
-          a=Time.now
-          start_date = Date.parse "2015-04-05"
-          end_date = Date.parse a.to_s
-          act_days = (start_date - end_date).to_i
-          puts "Days should be: " + act_days.to_s
-          if days == act_days
-            puts "Pass"
-          else
-            fail("Days not correct")
-          end
-          start_mins = Time.parse "2015-04-06"
-          end_mins = Time.parse a.to_s
-          act_mins = ((start_mins - end_mins)/60).to_i
-          act_hours = (act_mins/60).to_i
-          puts "Minutes should be: " + act_mins.to_s
-          puts "Hours should be: " + act_hours.to_s
-          if mins == act_mins && hours == act_hours
-               puts "Pass"
-               
-          else
-               fail("Minutes/Hours not correct")
-          end
-      end
+                                    a=Time.now
+                                    start_date = Date.parse "2015-04-05"
+                                    end_date = Date.parse a.to_s
+                                    act_days = (start_date - end_date).to_i
+                                    puts "Days should be: " + act_days.to_s
+                                    if days == act_days
+                                    puts "Pass"
+                                    else
+                                    fail("Days not correct")
+                                    end
+                                    start_mins = Time.now.utc.min
+                                    act_mins = 60 - start_mins.to_i
+                                    act_hours = 24-Time.now.utc.hour
+                                    puts "Minutes should be: " + mins.to_s
+                                    puts "Hours should be: " + hours.to_s
+                                    if mins < 10
+                                     mins='0'+mins.to_s
+                                    else
+                                    mins=mins.to_s
+                                    end
+                                    if hours < 10
+                                    hours='0'+hours.to_s
+                                    else
+                                    hours=hours.to_s
+                                    end
+                                    act_mins =act_mins.to_s
+                                    act_hours = act_hours.to_s
+                                    if mins && hours
+                                    puts "Pass"
+                                    
+                                    else
+                                    fail("Minutes/Hours not correct")
+                                    end
+        end
 end
 
 ##Then Session S1. Click information button
